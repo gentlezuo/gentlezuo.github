@@ -15,9 +15,9 @@
 <li>Product：抽象产品类</li>
 <li>ConcreteProduct：具体产品类</li>
 <li>Factory：抽象产品类</li>
-<li>ConcreteFactory：具体工厂类</li>
+<li>ConcreteFactory：具体工厂类<a id="more"></a>
+<img src="/2019/04/04/工厂方法模式/FactoryMethod.jpg" alt="工厂方法模式类图"></li>
 </ul>
-<p><img src="/2019/04/04/工厂方法模式/FactoryMethod.jpg" alt="工厂方法模式类图"></p>
 <h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><p>一个人想要获取不同的衣服的场景<br>抽象产品类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ClothesInterface</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>具体产品类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClothesOne</span> <span class="keyword">implements</span> <span class="title">ClothesInterface</span> </span>&#123; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClothesTwo</span> <span class="keyword">implements</span> <span class="title">ClothesInterface</span> </span>&#123; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

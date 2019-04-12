@@ -11,7 +11,7 @@
 <h2 id="registerNatives-方法"><a href="#registerNatives-方法" class="headerlink" title="registerNatives()方法"></a>registerNatives()方法</h2><p>对几个本地方法进行注册(也就是初始化java方法映射到C的方法)。</p>
 <h2 id="public-final-native-Class-lt-gt-getClass"><a href="#public-final-native-Class-lt-gt-getClass" class="headerlink" title="public final native Class&lt;?&gt; getClass()"></a>public final native Class&lt;?&gt; getClass()</h2><p>获取class对象</p>
 <h2 id="public-native-int-hashCode"><a href="#public-native-int-hashCode" class="headerlink" title="public native int hashCode()"></a>public native int hashCode()</h2><p>获取一个对象的hashcode码，若不复写该方法，返回的是该类的内存地址<br>如果重写的一个类的equals()方法，必须重写该方法。因为在Set中，根据一个对象的hash码来计算角标((length-1)&amp;hash),如果不复写该方法，会存在两个相等的对象存在一个set中，违反了set的元素不可重复性。</p>
-<h2 id="public-boolean-equals-Object-obj"><a href="#public-boolean-equals-Object-obj" class="headerlink" title="public boolean equals(Object obj)"></a>public boolean equals(Object obj)</h2><p>判断两个对象是否相等，默认比较两个对象地址</p>
+<h2 id="public-boolean-equals-Object-obj"><a href="#public-boolean-equals-Object-obj" class="headerlink" title="public boolean equals(Object obj)"></a>public boolean equals(Object obj)</h2><p>判断两个对象是否相等，默认比较两个对象地址<br><a id="more"></a></p>
 <h2 id="protected-native-Object-clone"><a href="#protected-native-Object-clone" class="headerlink" title="protected native Object clone()"></a>protected native Object clone()</h2><p>实现拷贝  </p>
 <h3 id="深拷贝与浅拷贝"><a href="#深拷贝与浅拷贝" class="headerlink" title="深拷贝与浅拷贝"></a>深拷贝与浅拷贝</h3><p>浅拷贝：被复制对象的所有值属性都含有与原来对象的相同，而所有的对象引用属性仍然指向原来的对象。</p>
 <p>深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了clone，并指向被复制过的新对象。</p>

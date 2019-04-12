@@ -17,9 +17,9 @@
 <li>Component:抽象构建，通常是一个接口</li>
 <li>ConcreteComponent: 具体构件（可以被装饰）</li>
 <li>Decorator: 抽象装饰类</li>
-<li>ConcreteDecorator: 具体装饰类</li>
+<li>ConcreteDecorator: 具体装饰类<a id="more"></a>
+<img src="/2019/04/05/装饰器模式/装饰器模式.png" alt="装饰器模式"></li>
 </ul>
-<p><img src="/2019/04/05/装饰器模式/装饰器模式.png" alt="装饰器模式"></p>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>我有一辆车，想要给它添加不同的功能</p>
 <p>Component<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>具体构建<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyCar</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
