@@ -30,6 +30,7 @@
 <li>“参数列表”表示方法的参数，其语法与属性的定义相似，参数个数是任意的，多个参数之间用逗号“，”隔开。</li>
 <li>“返回类型”是一个可选项，表示方法的返回值类型，依赖于具体的编程语言，可以是基本数据类型，也可以是用户自定义类型，还可以是空类型(void)，如果是构造方法，则无返回类型。</li>
 </ul>
+<p><img src="/2019/04/03/类图与类之间的关系/类图.jpg" alt></p>
 <h2 id="类之间的关系"><a href="#类之间的关系" class="headerlink" title="类之间的关系"></a>类之间的关系</h2><p>组合，聚合，泛化，实现</p>
 <h3 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h3><p>在UML类图中，用实线连接有关联关系的对象所对应的类。</p>
 <p>在关联中又包含几种关联方式</p>
@@ -45,6 +46,7 @@
 <p>组合关系用<strong>带实心菱形的直线</strong>表示</p>
 <p>在代码实现组合关系时，通常在整体类的构造方法中直接实例化成员类</p>
 <p>例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Head</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Mouth mouth;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Head</span><span class="params">()</span></span>&#123;</span><br><span class="line">        mouth=<span class="keyword">new</span> Mouth();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mouth</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2019/04/03/类图与类之间的关系/Mouth.png" alt></p>
 <h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><p>依赖是一种使用关系，特定事物的改变会改变使用该事物的事物，在需要使用某类时使用依赖</p>
 <p>大多数情况下，依赖关系体现在某个类的方法使用另一个类的对象作为参数。在UML中，依赖关系用<strong>带箭头的虚线</strong>表示，由依赖的一方指向被依赖的一方。  </p>
 <p>依赖关系通常通过三种方式来实现，第一种也是最常用的一种方式是如图1所示的将一个类的对象作为另一个类中方法的参数，第二种方式是在一个类的方法中将另一个类的对象作为其局部变量，第三种方式是在一个类的方法中调用另一个类的静态方法。</p>
