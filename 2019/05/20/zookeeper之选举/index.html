@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="zookeeper之选举"><meta name="keywords" content="zookeeper"><meta name="author" content="gentlezuo"><meta name="copyright" content="gentlezuo"><title>zookeeper之选举 | gentlezuo的博客</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#zookeeper选举机制"><span class="toc-number">1.</span> <span class="toc-text">zookeeper选举机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#请求，事务，标识符"><span class="toc-number">1.1.</span> <span class="toc-text">请求，事务，标识符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#群首选举"><span class="toc-number">1.2.</span> <span class="toc-text">群首选举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zab"><span class="toc-number">1.3.</span> <span class="toc-text">Zab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地存储"><span class="toc-number">1.4.</span> <span class="toc-text">本地存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#日志"><span class="toc-number">1.4.1.</span> <span class="toc-text">日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快照"><span class="toc-number">1.4.2.</span> <span class="toc-text">快照</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://s2.ax1x.com/2019/03/29/A0hzi6.jpg"></div><div class="author-info__name text-center">gentlezuo</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/gentlezuo">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">39</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">17</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://s2.ax1x.com/2019/03/29/ABlpl9.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">gentlezuo的博客</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">zookeeper之选举</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-05-20</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/分布式/">分布式</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.5k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="zookeeper选举机制"><a href="#zookeeper选举机制" class="headerlink" title="zookeeper选举机制"></a>zookeeper选举机制</h1><p>在了解zookeeper选举机制之前需要了解一些其他知识</p>
+<h2 id="请求，事务，标识符"><a href="#请求，事务，标识符" class="headerlink" title="请求，事务，标识符"></a>请求，事务，标识符</h2><p>zookeeper服务器会在本地处理只读请求（exists、getData、getChildren），所以zookeeper在处理以只读请求为主的负载时，性能会很高。</p>
+<p>那些会改变zookeeper状态的客户端请求（create、delete、setData、）会被转发到leader。leader执行相应的请求，完成状态的更新，称之为事务。</p>
+<p>看一个例子:加入一个客户端提交了一个对/z节点的setData请求，setData会改变该znode的数据信息，并会增加该节点的版本号，因此这个请求的事务会有两个重要的字段：数据字段，新版本号。<br><a id="more"></a><br><strong>事务具有幂等性</strong>，可以对一个事务执行多次，而得到的结果一致，幂等性使得在进行恢复处理很容易。</p>
+<h2 id="群首选举"><a href="#群首选举" class="headerlink" title="群首选举"></a>群首选举</h2><p>（群首）leader是一个集群中被选举出来的一个服务器，它被其他服务器所认可。设置leader是为了对客户端发起的会改变zookeeper状态的请求进行排序，讲一个请求转换为一个事务，将这些事务发送个follower，确保既无奈按照顺序执行事务。leader只有一个，通过选举产生。</p>
+<p>服务器的几种状态:</p>
+<ul>
+<li>LOOKING：寻找Leader状态。当服务器处于该状态时，它会认为当前集群中没有Leader，因此需要进入Leader选举状态。</li>
+<li>FOLLOWING：跟随者状态。表明当前服务器角色是Follower。</li>
+<li>LEADING：领导者状态。表明当前服务器角色是Leader。</li>
+<li>OBSERVING：观察者状态。表明当前服务器角色是Observer。</li>
+</ul>
+<p>每个服务器启动会进入looking状态，然后会进行选举，如果leader已经存在了，那么不用再进行选举；否则进行选举。如果中途leader挂了，那么余下的非observer会进入looking状态，然后开始选举</p>
+<ol>
+<li>每个服务器发送一个投票<br>在选举时服务器会发送选举信息vore(sid,zxid)，sid就是投票的服务器的id，zxid该服务器最近执行的事务的id，比如如果是（1,5）表示服务器sid为1，最近执行的事务的id是5.当一个服务器</li>
+<li>接受每个服务器的投票<br>检查是否合法，然后处理投票信息，将其与自己的投票信息进行pk，具体规则如下：<ul>
+<li>如果接收的zxid比自己的投票的zxid大或者zsid相等并且对方的sid&gt;mySid，那么更改自己的投票为接收的投票</li>
+<li>否则不改变投票信息，再次投票</li>
+<li>如果超过半数的服务器接受了某个投票，那么变选举出了leader</li>
+</ul>
+</li>
+<li>更改各个服务器的状态</li>
+</ol>
+<h2 id="Zab"><a href="#Zab" class="headerlink" title="Zab"></a>Zab</h2><p>ZAB 协议全称：Zookeeper Atomic Broadcast（Zookeeper 原子广播协议）。   </p>
+<p>ZAB 协议定义：ZAB 协议是为分布式协调服务 Zookeeper 专门设计的一种支持 崩溃恢复 和 原子广播 协议。</p>
+<p>当就收到一个请求后，follower会将其转发到leader，leader将其封装成一个事务，向每个follower发送一个proposal消息p，当follower接收到p后，会相应一个ack，通知leader已经接受到了该proposal，如果超过半数响应，那么leader开始发送消息通知follower开始进行commit，包括自己。</p>
+<p><img src="/2019/05/20/zookeeper之选举/1.png" alt><br><img src="/2019/05/20/zookeeper之选举/2.png" alt><br><img src="/2019/05/20/zookeeper之选举/3.png" alt>   </p>
+<p>那么有一个疑问，如何保证数据数据一致呢，zookeeper有几个重要的保障：</p>
+<ul>
+<li>如果leader按顺序广播了事务t和t1，那么每个服务器在提交t1之前会保证t已经提交完毕</li>
+<li>如果某个服务器按照t，t1的顺序提交了事务，那么其他服务器也会咋集体及哦啊事务t1前提交事务t</li>
+</ul>
+<p>如果leader崩溃了怎么办，zookeeper做出了以下保障</p>
+<ul>
+<li>确保那些已经在 Leader 提交的事务最终会被所有服务器提交。</li>
+<li>确保丢弃那些只在 Leader 提出/复制，但没有提交的事务。<br>如果让 Leader 选举算法能够保证新选举出来的 Leader 服务器拥有集群总所有机器编号（即 ZXID 最大）的事务，那么就能够保证这个新选举出来的 Leader 一定具有所有已经提交的提案。而且只需要将提议转发给各个follower而不需要从其他follower提交到leader。</li>
+</ul>
+<p>那么又有一个问题，如何同步：<br>如果follower之后leader不多，leader只需要发送缺失的事务即可（DIFF），如果缺失很多，leader直接发送整个快照。当所有的 Follwer 服务器都成功同步之后，Leader 会将这些服务器加入到可用服务器列表中。</p>
+<h2 id="本地存储"><a href="#本地存储" class="headerlink" title="本地存储"></a>本地存储</h2><h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><p>服务器会通过日志来持久化事务，当接受一个提议，就将其写入到日志中，后面的事务会按顺序追加到后面，日志保存到磁盘中。</p>
+<h3 id="快照"><a href="#快照" class="headerlink" title="快照"></a>快照</h3><p>快照是zookeeper的数据树的拷贝。服务器经常进行产生快照，在生成快照期间不会阻塞，可以继续处理请求。因此在生成快照是模糊的（fuzzy），不能反应在任意时间定的数据数的准确状态，例如：</p>
+<p>此时有两个节点/z=1,z1=2<br>开始生成快照,持久化的/z<br>开始事务t，、/z=3<br>事务t1，/z1=4<br>持久化z1<br>那么该快照不能反应任意时间点的状态</p>
+<p>然而这不是个问题，服务器会重播事务，每一个快照会以开始快照前最后的事务的时间戳作为tag，记为TS，在加载快照时，会执行在TS之后的日志中的所有的事务，在这个例子中就是t和t1.由于幂等性，所以重复执行事务不会影响数据一致性。</p>
+<p>参考<a href="https://www.cnblogs.com/stateis0/p/9062133.html" target="_blank" rel="noopener">https://www.cnblogs.com/stateis0/p/9062133.html</a><br>zookeeper分布式过程协同技术详解</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">gentlezuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://gentlezuo.github.io/2019/05/20/zookeeper之选举/">http://gentlezuo.github.io/2019/05/20/zookeeper之选举/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gentlezuo.github.io">gentlezuo的博客</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/zookeeper/">zookeeper</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/05/19/zookeeper入门/"><span>zookeeper入门</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://s2.ax1x.com/2019/03/29/ABlpl9.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By gentlezuo</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
