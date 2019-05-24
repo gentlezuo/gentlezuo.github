@@ -12,7 +12,7 @@
 <h2 id="核心类"><a href="#核心类" class="headerlink" title="核心类"></a>核心类</h2><h3 id="ChannelHandler"><a href="#ChannelHandler" class="headerlink" title="ChannelHandler"></a>ChannelHandler</h3><p>ChannelHandler用来处理I/O事件或者拦截I/O操作，并将其转发到ChannelPipeline中的下一个handler中。每一个ChannelHandler都有一个 ChannelHandlerContext对象，handler与它所属的ChannelPipeline（管道）对象联系，可以向通道的上游或者下游传递事件，动态的改变管道，或者存储一些信息。</p>
 <p>Channel本身并没有提供很多的方法去处理事件，只有：</p>
 <ul>
-<li>handlerAdded(ChannelHandlerContext ctx)：当有一个</li>
+<li>handlerAdded(ChannelHandlerContext ctx)：</li>
 <li>handlerRemoved(ChannelHandlerContext ctx)</li>
 <li>Sharable注解</li>
 </ul>
