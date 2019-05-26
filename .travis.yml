@@ -32,7 +32,7 @@ after_script:
 
 branches:
   only:
-    - src  #只监测master分支，master是我的分支的名称，可根据自己情况设置
+    - source  #只监测master分支，master是我的分支的名称，可根据自己情况设置
 env:
  global:
    - GH_REF: github.com/gentlezuo/gentlezuo.github.io.git  #设置GH_REF，注意更改yourname
