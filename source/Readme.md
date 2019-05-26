@@ -3,4 +3,4 @@
 
 
 
-## [属于我的一个技术博客]((https://gentlezuo.github.io/))
+## [属于我的一个技术博客](https://gentlezuo.github.io/)
