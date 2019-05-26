@@ -21,7 +21,7 @@ public class BorrowedBook {
     private Student student;
     private Date starttime;
     private Date deadtime;
-    public BorrowedBook(){}
+    public BorrowedBook(){}  
     public BorrowedBook(@Param("starttime") Date starttime,@Param("deadtime") Date deadtime) {
         this.starttime = starttime;
         this.deadtime = deadtime;
