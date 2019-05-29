@@ -1,8 +1,10 @@
 ---
 title: zookeeper入门
 date: 2019-05-19 22:37:33
-tags: zookeeper
-category: 分布式
+tags: 
+- zookeeper
+- 分布式
+category: zookeeper
 ---
 
 # zookeeper入门

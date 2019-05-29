@@ -1,8 +1,10 @@
 ---
 title: zookeeper之选举
 date: 2019-05-20 21:08:27
-tags: zookeeper
-category: 分布式
+tags: 
+- zookeeper
+- 分布式
+category: zookeeper
 ---
 
 # zookeeper选举机制

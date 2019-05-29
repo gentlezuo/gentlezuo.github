@@ -69,3 +69,7 @@ rpc的例子：
 那么在调用服务前，服务提供方需要在注册中心上注册服务，也就是向注册中心写入自己可以可以提供的服务以及自己的地址
 
 那么注册中心又是啥：一个可以写入数据，读取数据的工具。可以使用zookeeper，redis等。
+
+## 参考
+
+[dubbo文档](http://dubbo.apache.org/zh-cn/docs/user/preface/background.html)
