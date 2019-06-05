@@ -14,28 +14,58 @@ category: JDK源码
 ThreadLocal类可以使每个线程保存一份线程局部变量，也就是当前线程持有一个变量，各个线程之间的这个变量不受影响。一个线程可以有多个ThreadLocal实例。
 <!--more-->
 用法如下：
-```java
-public static void main(String[] args){
-        ThreadLocal<Integer> threadLocal=new ThreadLocal<>();
-        ThreadLocal<String> threadLocal2=new ThreadLocal<>();
-        ThreadLocal<People> threadLocal3=new ThreadLocal<>();
-        threadLocal.set(4);
-        threadLocal2.set("adgf");
-        threadLocal3.set(new People());
-        System.out.println(threadLocal.get());
-        System.out.println(threadLocal2.get());
-        System.out.println(threadLocal3.get());
-        threadLocal.remove();
-        System.out.println(threadLocal.get());
-}
 
+```java
+public class Temp {
+    ThreadLocal<Integer> threadLocal=new ThreadLocal<>();
+    public static void main(String[] args){
+        new Temp().run();
+    }
+
+
+    public void run(){
+        for (int i = 0; i <10 ; i++) {
+            new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    System.out.println(threadLocal.get());
+                    int a=new Random().nextInt(100);
+                    threadLocal.set(a);
+                    System.out.println(threadLocal+" "+threadLocal.get()+"  "+Thread.currentThread());
+
+
+                }
+            }).start();
+        }
+    }
+}
 -------------------------
 控制台： 
-4
-adgf
-People@74a14482
 null
+null
+null
+null
+null
+null
+java.lang.ThreadLocal@31c6e548 74  Thread[Thread-4,5,main]
+java.lang.ThreadLocal@31c6e548 39  Thread[Thread-5,5,main]
+java.lang.ThreadLocal@31c6e548 66  Thread[Thread-3,5,main]
+java.lang.ThreadLocal@31c6e548 10  Thread[Thread-0,5,main]
+java.lang.ThreadLocal@31c6e548 30  Thread[Thread-1,5,main]
+null
+java.lang.ThreadLocal@31c6e548 68  Thread[Thread-2,5,main]
+java.lang.ThreadLocal@31c6e548 37  Thread[Thread-6,5,main]
+null
+null
+null
+java.lang.ThreadLocal@31c6e548 1  Thread[Thread-9,5,main]
+java.lang.ThreadLocal@31c6e548 81  Thread[Thread-8,5,main]
+java.lang.ThreadLocal@31c6e548 40  Thread[Thread-7,5,main]
 ```
+
+从上可以看出，每一个线程都共享同一个ThreadLocal，但是他们又存有一个局部变量，这里是一个Integer，每一个局部变量都不影响对方的存在。
+
+
 
 ## 成员变量
 
