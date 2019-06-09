@@ -1,5 +1,5 @@
 ---
-title: about me
+title: About me
 date: 2019-05-05 00:00:00
 type: "about"
 ---
