@@ -9,7 +9,7 @@ category: java并发编程
 
 # java并发编程：进程和线程
 
-
+<!--more-->
 
 ## 进程的由来
 
@@ -54,5 +54,5 @@ java作为一门强大的编程语言，也支持线程。
 2. 如果是cpu密集型，比如处理压缩视频，跑模型，需要大量的计算，那么没必要的线程切换反而会浪费cpu资源；如果是IO密集型，那么可以适当多增加线程，在响应IO是可以使用cpu干其他的事
 
 
-##　参考
+## 参考
 [https://www.cnblogs.com/dolphin0520/p/3910667.html](https://www.cnblogs.com/dolphin0520/p/3910667.html)
