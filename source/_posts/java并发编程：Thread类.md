@@ -12,7 +12,7 @@ category: java并发编程
 在学习java中对线程的支持之前，先了解线程的几种状态。
 
 ## 线程的几种状态
-
+<!--more-->
 线程从创建到死亡会经历很多的状态：创建，就绪，执行，阻塞，waiting，time_waiting，死亡。waiting和time_wait属于block
 
 Thread内部类，线程的状态
