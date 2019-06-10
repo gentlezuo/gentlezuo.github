@@ -2,7 +2,6 @@
 title: java并发编程：Thread类
 date: 2019-06-10 10:15:33
 tags: 
-- 进程与线程
 - java
 category: java并发编程
 ---
