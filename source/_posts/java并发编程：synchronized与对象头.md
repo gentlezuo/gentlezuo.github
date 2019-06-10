@@ -9,8 +9,9 @@ category: java并发编程
 # java并发编程：synchronized与对象头
 
 
-## synchronized的使用
 
+## synchronized的使用
+<!--more-->
 
 ## 对象头
 
