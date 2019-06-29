@@ -22,7 +22,7 @@
 <h4 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h4><p>将每一个服务的配置集中管理，那么哪一种服务需要修改信息，只需在一个地方直接修改就行了。</p>
 <p>配置中心应该提供一种方案可以动态更改配置文件，而无需重启服务。</p>
 <p>spring cloud 提供了一个组件：spring cloud config可以达到实现这个需求，Alibaba也提供了一个很优秀的组件：nacos。</p>
-<p><a href="/springcloud系列导读/配置中心.png">配置中心</a></p>
+<p><img src="/2019/06/29/springcloud系列导读/配置中心.png" alt="配置中心"></p>
 <h3 id="robbin"><a href="#robbin" class="headerlink" title="robbin"></a>robbin</h3><h4 id="背景-2"><a href="#背景-2" class="headerlink" title="背景"></a>背景</h4><p>依旧是服务很多的问题，在服务调用的时候，选择哪一个服务提供是一个很重要的问题，如果选择方案差可能导致很多的服务调用方都调用同一个节点，那么这个节点就会有很高的延时，甚至耗尽线程，导致服务不可用。当一个服务不可用可能导致，在这条调用链上的服务都奔溃。</p>
 <h4 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h4><p>robbin提供优秀的负载均衡算法，寻找最合适的节点进行调用。</p>
 <h3 id="feign"><a href="#feign" class="headerlink" title="feign"></a>feign</h3><p>feign提供了远程调用的解决方案，只需要根据接口的注解信息就可以找到服务提供方的对应的方法，因此服务调用反不再需要依赖服务提供方（依旧需要知道服务提供方的名字，以及对应的uri，不需要依赖服务提供方的jar包）。</p>
