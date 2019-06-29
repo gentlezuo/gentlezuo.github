@@ -20,13 +20,13 @@ mybatis的使用步骤：
 - 从SqlSession中获取与相应接口对应的Mapper类
 - 调用接口中的方法
 - 关闭资源
-
+<!--more-->
 框架的一般原理：启动程序，读取配置文件，保存配置文件的信息，根据配置文件构造bean，在使用框架的功能时期，所有的配置文件的信息都被保存或者转化为其他的信息保存了起来。然后根据框架提供的api，调用框架的方法实现功能。mybatis也是如此：
 
 在获取 SqlSessionFactory 后，就将配置文件中的信息保存了起来，在一个 org.apache.ibatis.session.Configuration 的实例中。
 
 ## 获取SqlSessionFactory
-<!--more-->
+
 ```java
     String resource= "mybatis-config.xml";
     InputStream in= Resources.getResourceAsStream(resource);

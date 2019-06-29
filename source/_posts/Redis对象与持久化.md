@@ -12,7 +12,7 @@ category: 数据库
 Redis使用5种对象来实现键值对数据库：字符串，列表，哈希，集合，有序集合对象。使用这么多对象方便了在不同情景下的使用。
 
 ## 对象的类型与编码
-
+<!--more-->
 ~~~c
 typedef struct redisObject{
     //类型
@@ -27,7 +27,7 @@ typedef struct redisObject{
     unsigned lru:22;
 } robj;
 ~~~
-<!--more-->
+
 type即上述提到的五种对象类型，encoding属性记录了所使用的编码，也就是该对象使用了什么数据结构，使用引用计数实现内存回收机制，当计数为0时会释放该对象，空转时长记录最后一次命令访问此对象的时间。
 
 type表示是什么对象   

@@ -13,7 +13,7 @@ StringBuilder StringBuffer是常用的扩展了String功能的类，它们继承
 
 StringBuilder在更改字符串时由于缓冲区的原因可以提高效率，而且该类也提供了更丰富的功能。
 ## 源码分析
-
+<!--more-->
 ### AbstractStringBuilder
 ~~~java
 abstract class AbstractStringBuilder implements Appendable, CharSequence {
@@ -35,7 +35,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
             : newCapacity; 
     }
 ~~~
-<!--more-->
+
 #### 关于append，delete，replace等方法 
 大量调用了`System.arraycopy()`,`System.arraycopy()`为 JVM 内部固有方法，它通过手工编写汇编或其他优化方法来进行 Java 数组拷贝，这种方式比起直接在 Java 上进行 for 循环或 clone 是更加高效的。数组越大体现地越明显。
 ~~~java

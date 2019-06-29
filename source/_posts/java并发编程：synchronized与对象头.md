@@ -1,5 +1,5 @@
 ---
-title:  java并发编程：synchronized与对象头
+title: java并发编程：synchronized与对象头
 date: 2019-06-11 10:15:33
 tags: 
 - java

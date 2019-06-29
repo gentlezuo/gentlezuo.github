@@ -7,6 +7,7 @@ category: mybatis
 
 # SQL执行过程
 
+<!--more-->
 一个例子
 
 ```java
@@ -23,7 +24,7 @@ public void querytOne() throws IOException {
 }
 
 ```
-<!--more-->
+
 
 sql的执行如下：先根据反射获取一个Mapper对象，代理传入的类；然后根据sql的类型，比如select，返回的是map还是list还是void，选择不同的执行方法，解析参数的信息，判断是否有可以从缓存中获取数据等等，最后将查询的值经过结果处理器处理，将查询的数据放入缓存中，返回。
 

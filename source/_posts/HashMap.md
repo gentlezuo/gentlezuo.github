@@ -14,7 +14,7 @@ map是一种键值映射的数据结构，键不允许重复
 
 ## AbstractMap
 该类是其他具体map类的父类   
-
+<!--more-->
 有些子类允许键为null，例如HashMap，有些不允许例如Hashtable，ConcurrentHashMap，因此出现了以下的方法    
 代码：
 ~~~java
@@ -36,7 +36,7 @@ public boolean containsKey(Object key) {
         return false;
     }
 ~~~
-<!--more-->
+
 ### HashMap   
 HashMap是一个很常用很重要的工具类，看看它是怎么实现的   
 

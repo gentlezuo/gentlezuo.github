@@ -9,7 +9,8 @@ category: java
 ---
 
 # Object类
-Object是java当中所有类的祖先
+Object是java当中所有类的祖先。
+<!--more-->
 ## registerNatives()方法
 对几个本地方法进行注册(也就是初始化java方法映射到C的方法)。
 ## public final native Class<?> getClass()
@@ -20,7 +21,7 @@ Object是java当中所有类的祖先
 如果重写的一个类的equals()方法，必须重写该方法。因为在Set中，根据一个对象的hash码来计算角标((length-1)&hash),如果不复写该方法，会存在两个相等的对象存在一个set中，违反了set的元素不可重复性。
 ## public boolean equals(Object obj)
 判断两个对象是否相等，默认比较两个对象地址
-<!--more-->
+
 ## protected native Object clone()
 实现拷贝  
 ### 深拷贝与浅拷贝
