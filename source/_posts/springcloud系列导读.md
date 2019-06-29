@@ -52,7 +52,7 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 
 spring cloud 提供了一个组件：spring cloud config可以达到实现这个需求，Alibaba也提供了一个很优秀的组件：nacos。
 
-[配置中心](/springcloud系列导读/配置中心.png)
+![配置中心](/springcloud系列导读/配置中心.png)
 
 ### robbin
 
