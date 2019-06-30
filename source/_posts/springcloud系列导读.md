@@ -30,7 +30,7 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 
 注册中心还会和每一个服务进行心跳检测，来检测服务是否在线。那么如果被调用的服务还有活着的，服务调用方就可以调用。而如果将服务的地址写死在配置文件中，那么服务调用方就不会知道哪一个还可用。
 
-当然如果注册中心挂掉，那么整个系统就直接崩溃了，因此需要选择高可用的注册中心，比如**[zookeeper](https://gentlezuo.github.io/2019/05/19/zookeeper%E5%85%A5%E9%97%A8/)**，**eureka **，**consul**等，而且注册中心也必须是一个集群。
+当然如果注册中心挂掉，那么整个系统就直接崩溃了，因此需要选择高可用的注册中心，比如**[zookeeper](https://gentlezuo.github.io/2019/05/19/zookeeper%E5%85%A5%E9%97%A8/)**，**[eureka](https://gentlezuo.github.io/2019/06/29/springcloud-注册中心eureka/) **，**consul**等，而且注册中心也必须是一个集群。
 
 
 ![注册中心](/springcloud系列导读/注册中心.png)
