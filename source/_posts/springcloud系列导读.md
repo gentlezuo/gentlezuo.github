@@ -11,9 +11,15 @@ category: springcloud
 spring cloud是微服务的集大成者，它集成了许多优秀的工具，因此使用spring cloud 全家桶就可以很容易的开发微服务项目。
 
 它基于spring boot，因此配置简单，容易学习。
+<!--more-->
+
+1. **[zookeeper入门](https://gentlezuo.github.io/2019/05/19/zookeeper%E5%85%A5%E9%97%A8/)**
+2. **[springcloud-erueka注册中心](https://gentlezuo.github.io/2019/06/29/springcloud-注册中心eureka/)**
+3. **[springcloud-eureka注册中心](https://gentlezuo.github.io/2019/06/30/springcloud-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83consul/)**
+4. **[springcloud-服务调用-robbin负载均衡](https://gentlezuo.github.io/2019/06/30/springcloud-feign服务调用_robbin负载均衡)**
+
 
 ## 组件
-<!--more-->
 
 ### 注册中心
 
@@ -30,7 +36,7 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 
 注册中心还会和每一个服务进行心跳检测，来检测服务是否在线。那么如果被调用的服务还有活着的，服务调用方就可以调用。而如果将服务的地址写死在配置文件中，那么服务调用方就不会知道哪一个还可用。
 
-当然如果注册中心挂掉，那么整个系统就直接崩溃了，因此需要选择高可用的注册中心，比如**[zookeeper](https://gentlezuo.github.io/2019/05/19/zookeeper%E5%85%A5%E9%97%A8/)**，**[eureka](https://gentlezuo.github.io/2019/06/29/springcloud-注册中心eureka/) **，**[consul](https://gentlezuo.github.io/2019/06/30/springcloud-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83consul/)**等，而且注册中心也必须是一个集群。
+当然如果注册中心挂掉，那么整个系统就直接崩溃了，因此需要选择高可用的注册中心，比如**zookeeper**，**eureka**，**consul**等，而且注册中心也必须是一个集群。
 
 
 ![注册中心](/springcloud系列导读/注册中心.png)
@@ -50,7 +56,7 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 
 配置中心应该提供一种方案可以动态更改配置文件，而无需重启服务。
 
-spring cloud 提供了一个组件：spring cloud config可以达到实现这个需求，Alibaba也提供了一个很优秀的组件：nacos。
+spring cloud 提供了一个组件：**spring cloud config**可以达到实现这个需求，Alibaba也提供了一个很优秀的组件：**nacos**。
 
 ![配置中心](/springcloud系列导读/配置中心.png)
 
@@ -62,15 +68,15 @@ spring cloud 提供了一个组件：spring cloud config可以达到实现这个
 
 #### 解决方案
 
-robbin提供优秀的负载均衡算法，寻找最合适的节点进行调用。
+**robbin**提供优秀的负载均衡算法，寻找最合适的节点进行调用。
 
 ### feign
 
-feign提供了远程调用的解决方案，只需要根据接口的注解信息就可以找到服务提供方的对应的方法，因此服务调用反不再需要依赖服务提供方（依旧需要知道服务提供方的名字，以及对应的uri，不需要依赖服务提供方的jar包）。
+**feign**提供了远程调用的解决方案，只需要根据接口的注解信息就可以找到服务提供方的对应的方法，因此服务调用反不再需要依赖服务提供方（依旧需要知道服务提供方的名字，以及对应的uri，不需要依赖服务提供方的jar包）。
 
 ### hystrix
 
-在分布式环境中，许多服务依赖项中的一些不可避免地会失败。Hystrix通过添加延迟容错和容错逻辑来控制这些分布式服务之间的交互。Hystrix通过隔离服务之间的访问点，阻止它们之间的级联故障以及提供fallback选项来实现这一目标、提供快速失败并迅速恢复、实现实时调用监控、降级，来提高系统的整体可用性。
+在分布式环境中，许多服务依赖项中的一些不可避免地会失败。**Hystrix**通过添加延迟容错和容错逻辑来控制这些分布式服务之间的交互。Hystrix通过隔离服务之间的访问点，阻止它们之间的级联故障以及提供fallback选项来实现这一目标、提供快速失败并迅速恢复、实现实时调用监控、降级，来提高系统的整体可用性。
 
 
 ### 服务监控
