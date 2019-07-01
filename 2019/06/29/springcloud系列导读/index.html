@@ -15,10 +15,10 @@
 <li><strong><a href="https://gentlezuo.github.io/2019/06/30/springcloud-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83consul/">springcloud-consul注册中心</a></strong></li>
 <li><strong><a href="https://gentlezuo.github.io/2019/06/30/springcloud-feign服务调用_robbin负载均衡">springcloud-服务调用-robbin负载均衡</a></strong></li>
 <li><strong><a href="https://gentlezuo.github.io/2019/06/30/springcloud-config配置中心">springcloud-config配置中心</a></strong></li>
-<li><strong><a href="https://gentlezuo.github.io/2019/06/30/springcloud-注册中心nacos">springcloud-nacos注册中心</a></strong></li>
-<li><strong><a href="https://gentlezuo.github.io/2019/06/30/springcloud-配置中心nacos">springcloud-nacos配置中心</a></strong></li>
+<li><strong><a href="https://gentlezuo.github.io/2019/07/01/springcloud-注册中心nacos">springcloud-nacos注册中心</a></strong></li>
+<li><strong><a href="https://gentlezuo.github.io/2019/07/01/springcloud-配置中心nacos">springcloud-nacos配置中心</a></strong></li>
 </ol>
-<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="注册中心"><a href="#注册中心" class="headerlink" title="注册中心"></a>注册中心</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>如果服务调用方想调用一个服务必须知道被调用方的的地址（ip，域名）和服务提供方的方法，然后远程调用。但是在微服务中服务很多，同一种服务会有很多个节点，他们的地址不同，服务调用方就必须知道每一个服务提供方的地址，如果没有就注册中心，那么在配置文件中就会有很多数据，显然不合适。</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="注册中心"><a href="#注册中心" class="headerlink" title="注册中心"></a>注册中心</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>如果服务调用方想调用一个服务必须知道被调用方的的地址（ip，域名）和服务提供方的方法，然后远程调用。但是在微服务中服务很多，同一种服务会有很多个节点，他们的地址不同，服务调用方就必须知道每一个服务提供方的地址，如果没有就注册中心，那么在配置文件中就会有很多数据，显然不合适。 </p>
 <p>当需要服务扩容时必须修改很多配置，然后重新启动每一个节点，无法动态的扩容和收缩，显然也不合适。</p>
 <h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>注册中心的作用：服务注册与发现。注册中心存储所有服务的名字和地址，一个服务可以在注册中心发现其他的服务。</p>
 <p>一般情况是：注册中心启动，每一个服务必须知道注册中心的地址，然后服务启动时自动发一条消息给注册中心，然后注册中心存储该服务的名字和地址。当一个服务想要与另外的服务进行交互时，只需要知道另一个服务的名字就行了，然后从注册中心中查找该名字，获得对应的地址，让后进行交互。大大减少了配置。</p>
