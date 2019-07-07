@@ -13,10 +13,12 @@ category: 工具
 
 maven是一个Apache下由java开发的开源项目。基于对象模型的概念(POM)，Maven利用能管理一个项目的构建、报告和文档等步骤。
 
+<!--more-->
+
 ## 需求
 当写一个项目的时候往往需要引入第三方依赖包，但是一个第三方包可能又要依赖其他的包，一旦依赖过多，就会给开发人员造成很大的负担，而且容易出错。maven使用一个仓库存储需要的第三方库，而且可以自动解决依赖问题。构建过程枯燥重复，使用maven可以减轻构建的烦恼。
 
-<!--more-->
+
 
 ## 安装
 去[官网](http://maven.apache.org/download.cgi)下载相应系统的文件，解压放入一个目录，设置环境变量。      
@@ -25,7 +27,7 @@ maven是一个Apache下由java开发的开源项目。基于对象模型的概�
 也可以使用IDEA中自带的maven，一般使用自己安装的maven，可以在`File | Settings | Build, Execution, Deployment | Build Tools | Maven`中修改配置。   
 
 在maven的settings.xml中添加maven镜像，国内下载依赖会更快。   
-~~~
+~~~xml
 <mirror> 
 　　<id>alimaven</id> 
 　　<name>aliyun maven</name> 
@@ -102,7 +104,7 @@ pom.xml是核心文件：
 
 这三者唯一确定了一个jar包   
 举例：
-~~~
+~~~xml
 <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -141,6 +143,23 @@ pom.xml是核心文件：
 - 先声明（如果路径长度一致，后声明的会失效）
 
 使用`mvn dependency:tree`查看所有的依赖树
+
+#### 排除依赖
+
+如果想要排除某个依赖，可以直接排除掉
+```xml
+<dependency>      
+     <groupId>org.apache.hbase</groupId>  
+     <artifactId>hbase</artifactId>  
+     <version>0.94.17</version>   
+     <exclusions>    
+           <exclusion>        
+                <groupId>commons-logging</groupId>            
+                <artifactId>commons-logging</artifactId>    
+           </exclusion>    
+     </exclusions>    
+</dependency>   
+```
 
 #### 继承
 统一管理版本，子pom依赖父pom，当然你可以复写父pom的内容。

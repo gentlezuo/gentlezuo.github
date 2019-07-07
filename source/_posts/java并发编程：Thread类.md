@@ -23,7 +23,7 @@ public enum State {
         RUNNABLE,
     //阻塞状态：线程等待一个锁，当要进入synchronized代码块或者lock时可能进入这个状态
         BLOCKED,
-    //线程正在等该什么，当调用wait(),join()，sleep(long millis)等方法会进入这个状态
+    //线程正在等该什么，当调用wait(),join()，sleep等方法会进入这个状态
         WAITING,
     //带有时间限制的等待
         TIMED_WAITING,

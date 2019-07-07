@@ -6,6 +6,7 @@ tags:
 - JDK源码
 category: java
 ---
+
 # StringBuilder StringBuffer AbstractStringBuilder
 
 StringBuilder StringBuffer是常用的扩展了String功能的类，它们继承了AbstractStringBuilder。
