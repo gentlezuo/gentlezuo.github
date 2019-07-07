@@ -37,7 +37,7 @@ public boolean containsKey(Object key) {
     }
 ~~~
 
-### HashMap   
+## HashMap   
 HashMap是一个很常用很重要的工具类，看看它是怎么实现的   
 
 它是由数组+链表+红黑树实现的，也就是解决hash的冲突的办法是链地址法
@@ -45,7 +45,7 @@ HashMap是一个很常用很重要的工具类，看看它是怎么实现的
 数组的长度永远是2的幂（自有作用）  
 
 允许键值null
-#### 基本成员属性
+### 基本成员属性
 ~~~java
 //实现了可序列化和克隆
 public class HashMap<K,V> extends AbstractMap<K,V>
@@ -76,8 +76,8 @@ public class HashMap<K,V> extends AbstractMap<K,V>
 
     }
 ~~~
-#### Node类
-键值结构在map里是由Map来存储的   
+### Node类
+键值结构在map里是由Node来存储的   
 ~~~java
 static class Node<K,V> implements Map.Entry<K,V> {
         //Node的hash值
@@ -94,7 +94,9 @@ static class Node<K,V> implements Map.Entry<K,V> {
 }
 ~~~
 
-#### HashMap具体的方法
+### HashMap具体的方法
+
+
 key的hash值:高16位与低16为进行亦或运算
 
 ~~~java

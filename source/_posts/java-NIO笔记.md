@@ -9,22 +9,27 @@ category: java
 
 # NIO笔记
 
+在以前传统的java IO是阻塞的，面向字节的。而NIO是非阻塞的，面向缓冲区的。
+<!--more-->
+在NIO中有三个组件：Buffer，Channel，Selector。
 
 ## Buffer
-Buffer是缓冲区，JDK提供了抽象的Buffer，以及基本数据类型（除了boolean）的Buffer，例如IntBuffer。缓冲区是存取数据的一个容器。
+Buffer是缓冲区，JDK提供了抽象的Buffer类，以及基本数据类型（除了boolean）的Buffer，例如IntBuffer。   
+缓冲区是存取数据的一个容器。   
+指针可以在缓冲区上前进后退，可以读缓冲区，写缓冲区，标记复位。正因为可以一次性写入读取一串数据，因此比传统IO更快。    
 
-### 属性
+### Buffer的属性
 - position：下一个可以读取的位置
 - limit：读取的位置的界限
 - capacity：缓冲区的容量
 - mark：标记，可以用来重置position
 恒等式：mark <= position <= limit <=capacity　　　
-<!--more-->
-### 主要方法 
+
+### Buffer的主要方法 
 - allocate(int capacity),分配空间，实际上是返回一个子类HeapByteBuffer的对象
 - put(),向缓冲区添加数据(Buffer类没有这个方法)
 - get()，从获取数据
-- flip(),倒置
+- flip(),倒置，limit变为position，position变为0，mark变为-1
 - clear()，清除缓冲区
 
 以ByteBuffer类为例
@@ -72,12 +77,11 @@ public final Buffer clear() {
 
 所有的IO操作都需要操作系统进入内核态才行，而JVM进程属于用户态进程, 当JVM需要把一个缓冲区写到某个Channel或Socket的时候，需要切换到内核态.
 
-
 而内核态由于并不知道JVM里面这个缓冲区存储在物理内存的什么地址，并且这些物理地址并不一定是连续的(或者说不一定是IO操作需要的块结构)，所以在切换之前JVM需要把缓冲区复制到物理内存一块连续的内存上, 然后由内核去读取这块物理内存，整合成连续的、分块的内存.
 
 也就是说如果我们这个时候用的是非直接缓存的话，我们还要进行“复制”这么一个操作，而当我们申请了一个直接缓存的话，因为他本是就是一大块连续地址，我们就可以直接在它上面进行IO操作，省去了“复制”这个步骤
 
-当然缺点也是有的，他的分配和释放都比较昂贵，相对于非直接缓存而言
+当然缺点也是有的，他的分配和释放都比较昂贵，相对于非直接缓存而言；因为直接缓冲区都是JVM提前申请好的。
 
 ## Channel
 通道连接io流，使得数据可以在通道中流动。
@@ -100,7 +104,6 @@ public static void copy2() throws IOException {
         //获取io
         FileInputStream in = new FileInputStream(new File("src/javaKnowledge/niostudy/1.jpeg"));
         FileOutputStream out = new FileOutputStream(new File("src/javaKnowledge/niostudy/2.jpeg"));
-
 
         //根据io获取channel
         FileChannel inChannel =in.getChannel();

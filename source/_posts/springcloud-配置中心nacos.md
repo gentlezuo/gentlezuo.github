@@ -51,11 +51,11 @@ db.password=xxxx
 ```java
 public class PasswordEncoderUtil {
     public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("123456"));
+        System.out.println(new BCryptPasswordEncoder().encode("yourPawword"));
     }
 }
 ```
-插入用户
+插入用户以及对应的密码的散列值
 ```sql
 INSERT INTO users (username, password, enabled) VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', TRUE);
 INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
