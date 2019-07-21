@@ -12,7 +12,7 @@
 <p>反射多使用在框架中，控制反转，动态代理都需要使用到反射。</p>
 <p>使用反射有一个前提：<strong>得到对应字节码的Class对象</strong>。因为要获取一个类的信息，就得通过Class对象。</p>
 <p>反射就是把java类中的各种成分映射成一个个的Java对象<br>例如：一个类有：成员变量、方法、构造方法、包等等信息，利用反射技术可以对一个类进行解剖，把各个组成部分映射成一个个对象。</p>
-<h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><p>Class对象表示正在运行的程序中已经加载的类或者接口。jvm中有很多个Class对象，放在方法区中，每一个类（包括八种基本类型）都有一个Class对象。Class对象是由jvm在类加载的时候创建的，所以没有构造方法，也不需要我们去构造。</p>
+<h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><p>Class对象表示正在运行的程序中已经加载的类或者接口。jvm中有很多个Class对象，每一个类（包括八种基本类型）都有一个Class对象。Class对象是由jvm在类加载的时候创建的，所以没有构造方法，也不需要我们去构造。</p>
 <p>通过Class对象可以获取某个类中的：构造方法、成员变量、成员方法；并访问成员；</p>
 <h3 id="获取Class对象的方法"><a href="#获取Class对象的方法" class="headerlink" title="获取Class对象的方法"></a>获取Class对象的方法</h3><p>三种方式：   </p>
 <ul>
