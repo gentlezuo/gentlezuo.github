@@ -20,6 +20,8 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 5. **[springcloud-config配置中心](https://gentlezuo.github.io/2019/06/30/springcloud-config配置中心)**
 6. **[springcloud-nacos注册中心](https://gentlezuo.github.io/2019/07/01/springcloud-注册中心nacos)**
 7. **[springcloud-nacos配置中心](https://gentlezuo.github.io/2019/07/01/springcloud-配置中心nacos)**
+8. **[APM工具对比](https://gentlezuo.github.io/2019/07/13/APM%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/#%E8%B0%83%E7%A0%94)**
+9. **[Prometheus介绍与监控mysql](https://gentlezuo.github.io/2019/07/12/Prometheus%E4%BB%8B%E7%BB%8D%E4%B8%8E%E7%9B%91%E6%8E%A7mysql/#more)**
 
 
 ## 组件
@@ -84,7 +86,8 @@ spring cloud 提供了一个组件：**spring cloud config**可以达到实现�
 
 ### 服务监控
 
-这是spring boot的组件。
-
 节点的状态可以使用spring boot admin监控，监控节点的健康信息，JVM的信息，Bean的信息，查看日志等等。
 
+但是springboot admin无法满足业务的需求,因为在分布式中需要全链路监控,获取每个服务的依赖图,每个请求的时间等，还需要能够自定义告警规则，达到规则就报警。总之监控希望能够观察一段时间内服务的状态，在出现问题时能够快速定位问题。对于这种需求可以使用对应的工具，比如spring cloud中集成的zipkin，还有例如apache的skywaking，大众点评的cat，韩国的Pinpoint等。上面有几种工具的对比。
+
+上述几种大多是对于服务的监控，对于机器的metrics，数据库的metrics，JVM的指标都没有很好的支持，可以选择其他的监控工具，比如prometheus，将数据展示到grafana上。
