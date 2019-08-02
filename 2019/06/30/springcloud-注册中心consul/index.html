@@ -67,7 +67,55 @@
 </ul>
 <p>这些如果全部写在命令中不合适，可以将其写在配置文件中，使用-config-dir 或 -config-file获得配置文件。</p>
 <p>更多配置请参考<a href="https://www.consul.io/docs/agent/options.html" target="_blank" rel="noopener">https://www.consul.io/docs/agent/options.html</a></p>
-<h2 id="vs-others"><a href="#vs-others" class="headerlink" title="vs others"></a>vs others</h2><p><img src="/2019/06/30/springcloud-注册中心consul/consulVSothers.png" alt="consulAndOthers"></p>
+<h2 id="vs-others"><a href="#vs-others" class="headerlink" title="vs others"></a>vs others</h2><table>
+<thead>
+<tr>
+<th>feature</th>
+<th>consul</th>
+<th>zk</th>
+<th>nacos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多数据中心</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>kv存储</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>一致性</td>
+<td>raft</td>
+<td>paxos</td>
+<td>raft</td>
+</tr>
+<tr>
+<td>cap</td>
+<td>cp</td>
+<td>cp</td>
+<td>cp</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>https/acl</td>
+<td>acl(3.5.5支持https)</td>
+<td>https</td>
+</tr>
+<tr>
+<td>metrics</td>
+<td>ok</td>
+<td>no</td>
+<td>ok</td>
+</tr>
+</tbody>
+</table>
+<p>另外nacos还可作为配置中心。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.consul.io/" target="_blank" rel="noopener">https://www.consul.io/</a><br><a href="https://blog.csdn.net/longgeqiaojie304/article/details/85259972" target="_blank" rel="noopener">https://blog.csdn.net/longgeqiaojie304/article/details/85259972</a></p>
 </div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">gentlezuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://gentlezuo.github.io/2019/06/30/springcloud-注册中心consul/">http://gentlezuo.github.io/2019/06/30/springcloud-注册中心consul/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gentlezuo.github.io">gentlezuo的博客</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/springcloud/">springcloud</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/30/springcloud-feign服务调用_robbin负载均衡/"><i class="fa fa-chevron-left">  </i><span>springcloud-服务调用-robbin负载均衡</span></a></div><div class="next-post pull-right"><a href="/2019/06/29/springcloud-注册中心eureka/"><span>springcloud-注册中心eureka</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://s2.ax1x.com/2019/03/29/ABlpl9.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By gentlezuo</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
   $('#nav').addClass('is-mobile')
