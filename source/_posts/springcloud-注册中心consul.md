@@ -166,7 +166,16 @@ ip：172.20.20.20 ，172.20.20.21 ，172.20.20.22
 
 
 ## vs others
-![consulAndOthers](/springcloud-注册中心consul/consulVSothers.png)
+
+| feature | consul | zk | nacos | 
+| --- | ---- | ---- | ---- |  
+| 多数据中心 | 支持 | 支持  | 支持 |
+| kv存储 | 支持 | 支持 | 支持 | 
+|一致性 | raft | paxos | raft | 
+|cap | cp | cp | cp |
+|安全 | https/acl | acl(3.5.5支持https)| https |
+| metrics | ok | no | ok |
+另外nacos还可作为配置中心。
 
 ## 参考
 [https://www.consul.io/](https://www.consul.io/)   
