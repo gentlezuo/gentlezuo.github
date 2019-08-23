@@ -30,13 +30,13 @@ Object是java当中所有类的祖先。
 深拷贝：在浅拷贝的基础上，所有引用其他对象的变量也进行了clone，并指向被复制过的新对象。
 
 ## public String toString()
-用于打印对象
+用于打印对象。System.out.println(A)会先调用A的toString方法。
 
 ## public final native void notify()
-唤醒正在等待此对象的单个线程。如果有线程正在等待这个对象，那么会选择唤醒其中一个线程。选择是任意的，并由实施者自行决定。
+唤醒正在等待此对象的单个线程。如果有线程正在等待这个对象，那么会选择唤醒其中一个线程。选择是任意的，并由实施者自行决定。用在synchronized内。
 
 ## public final native void notifyAll()
-唤醒所有等待此对象的线程
+唤醒所有等待此对象的线程。用在synchronized内。
 
 ## public final void wait()
 wait()的作用是让当前线程进入等待状态，同时，wait()也会让当前线程释放它所持有的锁。“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒(进入“就绪状态”)

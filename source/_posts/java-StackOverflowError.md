@@ -1,5 +1,5 @@
 ---
-title: java StackOverflowError
+title: java StackOverflowError与OOM
 date: 2019-04-21 11:57:19
 tags:
 - 错误
@@ -7,8 +7,8 @@ tags:
 category: java
 ---
 
-# StackOverflowError
-StackOverflowError 是一个java中常出现的错误：在jvm运行时的数据区域中有一个java虚拟机栈，当执行java方法时会进行压栈弹栈的操作。在栈中会保存局部变量，操作数栈，方法出口等等。jvm规定了栈的最大深度，当执行时栈的深度大于了规定的深度，就会抛出StackOverflowError错误。   
+## StackOverflowError
+StackOverflowError 是一个java中常出现的错误：在jvm运行时的数据区域中有一个java虚拟机栈，当执行java方法时会进行压栈弹栈的操作。在栈中会保存局部变量，操作数栈，方法出口等等。jvm规定了栈的最大深度，当执行时栈的深度大于了规定的深度，就会抛出StackOverflowError错误。当然，本地方法栈也会抛出次异常。   
 <!--more-->
 
 典型的例子：
@@ -78,7 +78,7 @@ public class StackOverFlowDemo {
 出现的错误：  
 ![](/java-StackOverflowError/stackoverflow.png)
 
-## toString()
+### toString()
 
 说到toString()方法，在打印一个对象时，会先调用这个对象的toString()方法，例如：   
 ~~~java
@@ -103,3 +103,24 @@ ublic class toStringDemo {
 ~~~
 I love you.
 ~~~
+
+## OOM
+OutOfMemoryError是堆溢出，堆java运行时的一个数据区域，用来存储对象，当对象太多，超过了堆的最大空间大小就会溢出。
+
+
+复现：配置jvm参数 `-Xmx100M`,用来设置堆的最大大小，更快看见效果。
+
+下方代码，由于一直往list中添加对象，而且全是活动对象，不会被垃圾回收器回收
+
+```java
+public class OOM {
+    public static void main(String[] args) {
+        List<OOM> list=new ArrayList<>();
+        while (true){
+            list.add(new OOM());
+        }
+    }
+}
+```
+
+![](/java-StackOverflowError/OOM.png)

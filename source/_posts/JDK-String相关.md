@@ -71,3 +71,13 @@ public synchronized StringBuffer reverse() {
         return this;
     }
 ~~~
+
+### String
+
+String是使用char数组实现的。
+
+如何理解String不可变
+1. String类被final修饰，无法继承
+2. char[] value被final修饰，无法改变引用的数组
+3. String没有提供更改数组内部值的方法
+4. 如果是字面值常量的话，为了防止重复创造对象，会将相同的字符串放在常量池。
