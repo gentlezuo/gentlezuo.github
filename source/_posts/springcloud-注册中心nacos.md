@@ -6,7 +6,6 @@ tags:
 category: springcloud
 ---
 
-# springcloud-注册中心nacos
 为什么要使用nacos？
 <!--more-->
 
@@ -28,7 +27,7 @@ Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一�
 - 浏览器中输入`localhost:8844/nacos`；登录`user=nacos,password=nacos`
 
 
-![nacos](springcloud-nacos注册中心\nacos注册.png)
+![nacos](springcloud-注册中心nacos/nacos注册.png)
 
 ## 服务注册于发现
 服务注册

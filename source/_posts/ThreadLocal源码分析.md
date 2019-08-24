@@ -6,13 +6,11 @@ tags:
 category: JDK源码
 ---
 
+ThreadLocal类可以使每个线程保存一份线程局部变量，也就是当前线程持有一个变量，各个线程之间的这个变量不受影响。一个线程可以有多个ThreadLocal实例。
 
-# ThreadLocal源码分析
-
+<!--more-->
 ## 简介
 
-ThreadLocal类可以使每个线程保存一份线程局部变量，也就是当前线程持有一个变量，各个线程之间的这个变量不受影响。一个线程可以有多个ThreadLocal实例。
-<!--more-->
 用法如下：
 
 ```java

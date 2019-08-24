@@ -6,8 +6,6 @@ tags:
 category: springcloud
 ---
 
-# springcloud系列导读
-
 spring cloud是微服务的集大成者，它集成了许多优秀的工具，因此使用spring cloud 全家桶就可以很容易的开发微服务项目。
 
 它基于spring boot，因此配置简单，容易学习。
@@ -60,6 +58,8 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 将每一个服务的配置集中管理，那么哪一种服务需要修改信息，只需在一个地方直接修改就行了。
 
 配置中心应该提供一种方案可以动态更改配置文件，而无需重启服务。
+
+配置中心应该可以进行版本管理。
 
 spring cloud 提供了一个组件：**spring cloud config**可以达到实现这个需求，Alibaba也提供了一个很优秀的组件：**nacos**。
 

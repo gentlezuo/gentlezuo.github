@@ -7,9 +7,8 @@ tags:
 category: zookeeper
 ---
 
-# zookeeper选举机制
-
 在了解zookeeper选举机制之前需要了解一些其他知识
+<!--more-->
 
 ## 请求，事务，标识符
 zookeeper服务器会在本地处理只读请求（exists、getData、getChildren），所以zookeeper在处理以只读请求为主的负载时，性能会很高。
@@ -17,7 +16,7 @@ zookeeper服务器会在本地处理只读请求（exists、getData、getChildre
 那些会改变zookeeper状态的客户端请求（create、delete、setData、）会被转发到leader。leader执行相应的请求，完成状态的更新，称之为事务。
 
 看一个例子:加入一个客户端提交了一个对/z节点的setData请求，setData会改变该znode的数据信息，并会增加该节点的版本号，因此这个请求的事务会有两个重要的字段：数据字段，新版本号。
-<!--more-->
+
 **事务具有幂等性**，可以对一个事务执行多次，而得到的结果一致，幂等性使得在进行恢复处理很容易。
 
 ## 群首选举

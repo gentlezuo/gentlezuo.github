@@ -6,8 +6,6 @@ tags:
 category: springcloud
 ---
 
-# springcloud-服务调用-robbin负载均衡
-
 ## 背景
 
 微服务的远程调用问题。

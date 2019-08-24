@@ -6,8 +6,6 @@ tags:
 category: springcloud
 ---
 
-# springcloud-注册中心eureka
-
 在springcloud中eureka被用来作为一个注册中心组件。
 <!--more-->
 

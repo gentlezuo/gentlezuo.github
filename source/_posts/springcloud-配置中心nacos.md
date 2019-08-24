@@ -6,10 +6,8 @@ tags:
 category: springcloud
 ---
 
-# springcloud-配置中心nacos
 nacos的配置功能比springcloud原生的要强大，更简洁。
 <!--more-->
-
 
 ## 配置nacos
 

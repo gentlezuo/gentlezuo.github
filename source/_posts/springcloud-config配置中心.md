@@ -6,8 +6,6 @@ tags:
 category: springcloud
 ---
 
-# springcloud-config配置中心
-
 ## 背景
 
 当提供同一服务的节点群拥有同一个配置文件，当配置文件需要修改的时候，必须修改配置文件后重新部署然后重启服务。

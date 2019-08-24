@@ -7,6 +7,9 @@ tags:
 category: zookeeper
 ---
 
+ZooKeeper是分布式应用程序的分布式开源协调服务。它被设计成易于编程，并且使用了一种以文件系统的熟悉目录树结构为风格的数据模型。它在Java中运行，并支持Java和c调用。
+<!--more-->
+
 # zookeeper入门
 
 ## 概览
@@ -14,7 +17,6 @@ category: zookeeper
 ### 简介
 
 ZooKeeper是分布式应用程序的分布式开源协调服务。它被设计成易于编程，并且使用了一种以文件系统的熟悉目录树结构为风格的数据模型。它在Java中运行，并支持Java和c调用。
-<!--more-->
 ### 设计目标
 
 ZooKeeper允许分布式进程通过共享的**分层命名空间**相互协调，该命名空间的组织类似于标准文件系统。这些命名空间包括了数据，zookeeper称其为znodes——这些存储节点类似于文件和目录。与为存储而设计的典型文件系统不同，ZooKeeper数据保存在内存中，这意味着ZooKeeper可以实现高吞吐量和低延迟。
@@ -98,7 +100,7 @@ ZooKeeper服务的每台服务器都复制其自己的每个组件的副本。�
 
 在同一台机器上可以部署单机环境，也可以使用多个配置文件来伪装集群，但是配置得时候注意端口不可重复。
 
-### java访问zookeeper Service、
+### java访问zookeeper
 没有实际意义的demo
 ```java
 
@@ -175,5 +177,8 @@ public class One {
 }
 ```
 
+### 命令行
+
+![](zookeeper入门/zk_cmd.jpg)
 
 参考[https://zookeeper.apache.org/doc/r3.4.14/](https://zookeeper.apache.org/doc/r3.4.14/)

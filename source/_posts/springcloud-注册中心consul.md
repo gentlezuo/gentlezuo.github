@@ -6,9 +6,8 @@ tags:
 category: springcloud
 ---
 
-# springcloud-注册中心consul
 
-既然eureka不再维护，那么我们可以考虑其他的组件，比如consul。
+既然eureka不再维护，那么我们可以考虑其他的组件，比如consul。consul生态很好。
 <!--more-->
 
 ## 简介
