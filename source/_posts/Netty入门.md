@@ -15,9 +15,9 @@ Netty可以很简单的编写客户端服务端，并且对tcp，udp，http，ss
 事件驱动：事件驱动是指在持续事务管理过程中，进行决策的一种策略，即跟随当前时间点上出现的事件，调动可用资源，执行相关任务，使不断出现的问题得以解决，防止事务堆积。也就是发生某件事情时，可以调用某些方法。在netty中需要适应事件驱动编程。
 
 netty在java NIO之上进行了封装，使用更便捷，解决了空轮询的bug。
+<!--more-->
 
 ## 使用
-<!--more-->
 在学习netty之前，需要学习java的NIO，网络编程。
 
 
@@ -477,5 +477,6 @@ public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception 
 
 继续学习可以阅读《netty in action》这本书
 
-参考[netty4.x用户指南](https://netty.io/wiki/user-guide-for-4.x)   
+参考   
+[netty4.x用户指南](https://netty.io/wiki/user-guide-for-4.x)   
 [netty in action(精髓)](https://waylau.com/essential-netty-in-action/GETTING%20STARTED/ChannelHandler%20and%20ChannelPipeline.html)

@@ -9,9 +9,9 @@ category: java并发编程
 # java并发编程：synchronized与对象头
 
 多线程提高了效率，但是也会出现同步的问题。为了解决这个问题，java提供了synchronized关键字和Lock类。
+<!--more-->
 
 ## synchronized的使用
-<!--more-->
 
 synchronized使用如下：
 

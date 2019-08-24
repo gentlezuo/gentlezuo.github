@@ -6,7 +6,6 @@ tags:
 category: java并发编程
 ---
 
-
 ## Lock的由来
 
 既然有了synchronized,为什么还要有Lock这个类.

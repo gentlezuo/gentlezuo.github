@@ -7,8 +7,6 @@ tags:
 category: java并发编程
 ---
 
-# java并发编程：进程和线程
-
 <!--more-->
 
 ## 进程的由来

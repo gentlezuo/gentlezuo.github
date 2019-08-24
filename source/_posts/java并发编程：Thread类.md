@@ -6,7 +6,6 @@ tags:
 category: java并发编程
 ---
 
-# java并发编程：Thread类
 
 在学习java中对线程的支持之前，先了解线程的几种状态。
 

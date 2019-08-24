@@ -7,7 +7,7 @@ tags:
 - 数据结构
 category: java
 ---
-# Map 
+
 map是一种键值映射的数据结构，键不允许重复 
 
 介绍一些java当中实现map的关键的几个方法，包括get，put，resize

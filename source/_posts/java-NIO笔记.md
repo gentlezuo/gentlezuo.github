@@ -7,7 +7,6 @@ tags:
 category: java
 ---
 
-# NIO笔记
 
 在以前传统的java IO是阻塞的，面向字节的。而NIO是非阻塞的，面向缓冲区的。
 <!--more-->

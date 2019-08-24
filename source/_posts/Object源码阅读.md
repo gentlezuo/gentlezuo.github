@@ -8,7 +8,6 @@ category: java
 
 ---
 
-# Object类
 Object是java当中所有类的祖先。
 <!--more-->
 ## registerNatives()方法

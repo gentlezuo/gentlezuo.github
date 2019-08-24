@@ -5,12 +5,11 @@ tags: netty
 category: netty
 ---
 
-# netty事件传播机制
 
 netty是基于事件驱动的，因此事件在netty中十分重要。当数据进入和出去时会发生事件，而我们会定义多个handler来处理这些事件，那么这些事件发生的顺序是怎样的呢，netty又是怎么实现的。
+<!--more-->
 
 在了解这些之前，需要了解几个类，`ChannelHandler`系列：包括`ChannelOutboundHandler`，`ChannelInboundHandler`等，还需要了解`ChannelPipeline`，`ChannelHandlerContext`系列。
-<!--more-->
 ## 核心类
 
 ### ChannelHandler
