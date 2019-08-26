@@ -18,8 +18,10 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 5. **[springcloud-config配置中心](https://gentlezuo.github.io/2019/06/30/springcloud-config配置中心)**
 6. **[springcloud-nacos注册中心](https://gentlezuo.github.io/2019/07/01/springcloud-注册中心nacos)**
 7. **[springcloud-nacos配置中心](https://gentlezuo.github.io/2019/07/01/springcloud-配置中心nacos)**
-8. **[APM工具对比](https://gentlezuo.github.io/2019/07/13/APM%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/#%E8%B0%83%E7%A0%94)**
-9. **[Prometheus介绍与监控mysql](https://gentlezuo.github.io/2019/07/12/Prometheus%E4%BB%8B%E7%BB%8D%E4%B8%8E%E7%9B%91%E6%8E%A7mysql/#more)**
+8. **[springcloud-链路追踪sleuth](https://gentlezuo.github.io/2019/07/05/springloud-%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AAsleuth/#%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)**
+9. **[springcloud-链路追踪skwalking](https://gentlezuo.github.io/2019/07/05/springcloud-%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AAskywalking/#more)**
+10. **[APM工具对比](https://gentlezuo.github.io/2019/07/13/APM%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/#%E8%B0%83%E7%A0%94)**
+
 
 
 ## 组件
