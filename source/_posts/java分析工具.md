@@ -7,6 +7,8 @@ tags:
 category: java
 ---
 
+jdk自带一些工具来查看或更改java程序的信息。在程序出现问题时可以用它们分析。
+<!--more-->
 ## jinfo
 
 jinfo用来查看JVM的参数，更改参数等。
