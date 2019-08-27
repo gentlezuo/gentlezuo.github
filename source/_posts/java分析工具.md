@@ -395,6 +395,57 @@ jhat -stack false -refs true -port 7878 -debug 1 heapdump
 
 ![jhat](java分析工具/jhat.png)
 
+## jstat
+
+主要对java堆和gc进行监控
+
+### 使用
+```
+$ jstat
+invalid argument count
+Usage: jstat -help|-options
+       jstat -<option> [-t] [-h<lines>] <vmid> [<interval> [<count>]]
+
+Definitions:
+  <option>      An option reported by the -options option
+  <vmid>        Virtual Machine Identifier. A vmid takes the following form:
+                     <lvmid>[@<hostname>[:<port>]]
+                Where <lvmid> is the local vm identifier for the target
+                Java virtual machine, typically a process id; <hostname> is
+                the name of the host running the target Java virtual machine;
+                and <port> is the port number for the rmiregistry on the
+                target host. See the jvmstat documentation for a more complete
+                description of the Virtual Machine Identifier.
+  <lines>       Number of samples between header lines.
+  <interval>    Sampling interval. The following forms are allowed:
+                    <n>["ms"|"s"]
+                Where <n> is an integer and the suffix specifies the units as 
+                milliseconds("ms") or seconds("s"). The default units are "ms".
+  <count>       Number of samples to take before terminating.
+  -J<flag>      Pass <flag> directly to the runtime system.
+```
+
+- option： 参数选项
+- -t： 可以在打印的列加上Timestamp列，用于显示系统运行的时间
+- -h： 可以在周期性数据数据的时候，可以在指定输出多少行以后输出一次表头
+- vmid： Virtual Machine ID（ 进程的 pid）
+- interval： 执行每次的间隔时间，单位为毫秒
+- count： 用于指定输出多少次记录，缺省则会一直打印
+
+- -class 显示ClassLoad的相关信息；
+- -compiler 显示JIT编译的相关信息；
+- -gc 显示和gc相关的堆信息；
+- -gccapacity 　　 显示各个代的容量以及使用情况；
+- -gcmetacapacity 显示metaspace的大小
+- -gcnew 显示新生代信息；
+- -gcnewcapacity 显示新生代大小和使用情况；
+- -gcold 显示老年代和永久代的信息；
+- -gcoldcapacity 显示老年代的大小；
+- -gcutil　　 显示垃圾收集信息；
+- -gccause 显示垃圾回收的相关信息（通-gcutil）,同时显示最后一次或当前正在发生的垃圾回收的诱因；
+- -printcompilation 输出JIT编译的方法信息；
+
+
 ## 总结
 
 - jps：查看 Java 进程的pid、启动类、传入参数和 Java 虚拟机参数等信息。
@@ -404,3 +455,4 @@ jhat -stack false -refs true -port 7878 -debug 1 heapdump
 - jstack：线程相关：打印Java进程，线程堆栈跟踪.死锁监测和HANG
 - jmap：查看堆上的信息，转存堆快照
 - jhat：分析堆快照
+- jstat：主要对堆，gc进行监控
