@@ -40,7 +40,7 @@ Object是java当中所有类的祖先。
 ## public final void wait()
 wait()的作用是让当前线程进入等待状态，同时，wait()也会让当前线程释放它所持有的锁。“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒(进入“就绪状态”)
 ## public final native void wait(long timeout)
-在上诉的方法中增加了超时，超时会被唤醒
+在上述的方法中增加了超时，超时会被唤醒
 
 ## protected void finalize()
 当对象不再被任何对象引用时，GC会调用该对象的finalize()方法
