@@ -57,7 +57,7 @@ SELECT * FROM t1, t2
 - 不适用于全文索引
 
 ## 简介
-在使用explain 时，在type那一列会显示`index_merge`,key那一列是所有使用到的索引，key_len是使用到的索引中最长的长度。
+在使用explain 时，在type那一列会显示`index_merge`,key那一列是所有使用到的索引。
 
 索引合并又包含三个算法，在explain中显示：
 - using intersect
