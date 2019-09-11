@@ -1,5 +1,5 @@
 ---
-title: MySQL:索引
+title: MySQL：索引
 date: 2019-08-30 22:26:17
 tags: 数据库
 category: MySQL
