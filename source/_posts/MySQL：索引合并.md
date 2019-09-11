@@ -8,6 +8,29 @@ category: MySQL
 当单表中使用到了多个索引，优化器就可能使用索引合并(index merge)。mysql官网上只说了是什么，并没有讲为什么。
 <!--more-->
 
+- [索引合并](#%E7%B4%A2%E5%BC%95%E5%90%88%E5%B9%B6)
+  - [不足](#%E4%B8%8D%E8%B6%B3)
+  - [简介](#%E7%AE%80%E4%BB%8B)
+  - [算法](#%E7%AE%97%E6%B3%95)
+    - [index merge intersection access algorithm（索引合并交集访问算法）](#index-merge-intersection-access-algorithm%E7%B4%A2%E5%BC%95%E5%90%88%E5%B9%B6%E4%BA%A4%E9%9B%86%E8%AE%BF%E9%97%AE%E7%AE%97%E6%B3%95)
+      - [执行流程](#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B)
+      - [必要条件](#%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6)
+    - [index merge union access algorithm（索引合并并集访问算法）](#index-merge-union-access-algorithm%E7%B4%A2%E5%BC%95%E5%90%88%E5%B9%B6%E5%B9%B6%E9%9B%86%E8%AE%BF%E9%97%AE%E7%AE%97%E6%B3%95)
+      - [必要条件](#%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6-1)
+      - [执行流程](#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B-1)
+      - [例子](#%E4%BE%8B%E5%AD%90)
+    - [index merge sort sort-union access algorithm （索引合并排序并集访问算法）](#index-merge-sort-sort-union-access-algorithm-%E7%B4%A2%E5%BC%95%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%B9%B6%E9%9B%86%E8%AE%BF%E9%97%AE%E7%AE%97%E6%B3%95)
+      - [必要条件](#%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6-2)
+      - [执行流程](#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B-2)
+      - [例子](#%E4%BE%8B%E5%AD%90-1)
+  - [实战](#%E5%AE%9E%E6%88%98)
+    - [复现 intersect](#%E5%A4%8D%E7%8E%B0-intersect)
+    - [复现 union](#%E5%A4%8D%E7%8E%B0-union)
+    - [复现 sort-union](#%E5%A4%8D%E7%8E%B0-sort-union)
+    - [复现因为组合索引没有完全覆盖而导致没有使用intersect](#%E5%A4%8D%E7%8E%B0%E5%9B%A0%E4%B8%BA%E7%BB%84%E5%90%88%E7%B4%A2%E5%BC%95%E6%B2%A1%E6%9C%89%E5%AE%8C%E5%85%A8%E8%A6%86%E7%9B%96%E8%80%8C%E5%AF%BC%E8%87%B4%E6%B2%A1%E6%9C%89%E4%BD%BF%E7%94%A8intersect)
+    - [复现因为二级索引不是等值查询而导致没有使用intersect](#%E5%A4%8D%E7%8E%B0%E5%9B%A0%E4%B8%BA%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%95%E4%B8%8D%E6%98%AF%E7%AD%89%E5%80%BC%E6%9F%A5%E8%AF%A2%E8%80%8C%E5%AF%BC%E8%87%B4%E6%B2%A1%E6%9C%89%E4%BD%BF%E7%94%A8intersect)
+  - [参考](#%E5%8F%82%E8%80%83)
+
 # 索引合并
 当单表使用了多个索引，每个索引都可能返回一个结果集，mysql会将其求交集或者并集，或者是交集和并集的组合。也就是说一次查询中可以使用多个索引。
 
@@ -29,7 +52,7 @@ SELECT * FROM t1, t2
 2. 对于第二条语句：先丢弃`non_key=30`,因为它使用不到索引，where语句就变成了`where key10 or key2=20`,使用索引先根据索引合并并集访问算法
 3. 对于第三条语句：索引合并并集访问算法求出`(t1.key1 IN (1,2) OR t1.key2 LIKE 'value%'`；然后是join操作
 
-### 不足
+## 不足
 - 对于复杂的where子语句，包含了很深的and/or 嵌套，那么不会使用到索引合并技术
 - 不适用于全文索引
 
@@ -132,7 +155,9 @@ SELECT * FROM tbl_name
   WHERE (key_col1 > 10 OR key_col2 = 20) AND nonkey_col = 30;
 ```
 
-### 实战
+## 实战
+
+实践出真知，通过实践验证上述分析是否正确。
 
 先创建一个一个表，包含主键，联合索引，单列索引，然后插入10000行数据。
 

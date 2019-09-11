@@ -153,7 +153,7 @@ b+树索引通常在生成上的树高为2-4，那么逻辑IO只有2-4，假如�
 
 #### 索引管理
 
-```
+```sql
 mysql> show index from test1;
 +-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
 | Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
