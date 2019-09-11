@@ -56,7 +56,7 @@
 <li>对于复杂的where子语句，包含了很深的and/or 嵌套，那么不会使用到索引合并技术</li>
 <li>不适用于全文索引</li>
 </ul>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在使用explain 时，在type那一列会显示<code>index_merge</code>,key那一列是所有使用到的索引，key_len是使用到的索引中最长的长度。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在使用explain 时，在type那一列会显示<code>index_merge</code>,key那一列是所有使用到的索引。</p>
 <p>索引合并又包含三个算法，在explain中显示：</p>
 <ul>
 <li>using intersect</li>
