@@ -79,7 +79,7 @@ SELECT * FROM t1, t2
    ```sql
    key_part1 = const1 AND key_part2 = const2 ... AND key_partN = constN
    ```
-2. InnoDB表上的范围查询条件
+2. InnoDB表上的主键范围查询条件
 
 例子：
 ```sql
