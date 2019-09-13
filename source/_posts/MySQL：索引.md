@@ -21,13 +21,16 @@ category: MySQL
   - [是否单列](#%E6%98%AF%E5%90%A6%E5%8D%95%E5%88%97)
   - [其他](#%E5%85%B6%E4%BB%96)
 - [innodb中的索引](#innodb%E4%B8%AD%E7%9A%84%E7%B4%A2%E5%BC%95)
-  - [小知识点](#%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9)
+  - [前提](#%E5%89%8D%E6%8F%90)
   - [b+树索引](#b%E6%A0%91%E7%B4%A2%E5%BC%95)
-    - [索引管理](#%E7%B4%A2%E5%BC%95%E7%AE%A1%E7%90%86)
-    - [MRR（Multi-Range Read）优化](#MRRMulti-Range-Read%E4%BC%98%E5%8C%96)
-    - [Index Condition Pushdown（ICP）优化](#Index-Condition-PushdownICP%E4%BC%98%E5%8C%96)
   - [哈希索引](#%E5%93%88%E5%B8%8C%E7%B4%A2%E5%BC%95)
   - [全文索引](#%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95)
+  - [索引管理](#%E7%B4%A2%E5%BC%95%E7%AE%A1%E7%90%86)
+- [索引优化](#%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96)
+  - [MRR（Multi-Range Read）优化](#MRRMulti-Range-Read%E4%BC%98%E5%8C%96)
+  - [Index Condition Pushdown（ICP）优化](#Index-Condition-PushdownICP%E4%BC%98%E5%8C%96)
+  - [descending indexes（降序索引）](#descending-indexes%E9%99%8D%E5%BA%8F%E7%B4%A2%E5%BC%95)
+  - [使用索引扩展（use of index extensions）](#%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E6%89%A9%E5%B1%95use-of-index-extensions)
 - [实践](#%E5%AE%9E%E8%B7%B5)
   - [优化器不使用索引的情况](#%E4%BC%98%E5%8C%96%E5%99%A8%E4%B8%8D%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E7%9A%84%E6%83%85%E5%86%B5)
   - [自增主键](#%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE)
@@ -49,7 +52,7 @@ category: MySQL
 - 优势：有序数组的等值查询与范围查询在性能上都很优秀；占用空间少；实现简单；天然有序
 - 劣势：插入性能太差
 
-适用环境：插入较少的情况，不在变化的数据，比如去年的销售情况
+适用环境：插入较少的情况，不再变化的数据，比如去年的销售情况
 
 ### hash
 
@@ -90,7 +93,7 @@ category: MySQL
 | 插入 |O(logmN)|   |
 | 删除 | O(logmN)|  |
 
-- 优势：m会很大，因此IO次数少；范围查询，排序性能较好
+- 优势：m很大，因此IO次数少；范围查询，排序性能较好
 - 劣势：不稳定
 
 
@@ -117,26 +120,26 @@ category: MySQL
 ### 是否聚集
 
 - 聚集索引：叶子节点上存储着数据项，比如Innodb中的主键索引，在逻辑上真实数据项按照索引组织
-- 非聚集索引：叶子节点上不是数据项，比如二级索引叶子节点上是主键
+- 非聚集索引：叶子节点上不是数据项，比如InnoDB二级索引叶子节点上是主键
 
 ### 是否单列
 
 - 单列索引
-- 组合索引：多个字段组合的索引，能利用前缀匹配，索引覆盖；但是会使用更多的空间
+- 组合索引：多个字段组合的索引，能利用前缀匹配，索引覆盖，索引下推；但是会使用更多的空间
 
 ### 其他
 
-- 全文索引：一种用于全文搜索关键子的索引，通常使用倒排索引
+- 全文索引：一种用于全文搜索关键字的索引，通常使用倒排索引
 - 倒排索引
 
 ## innodb中的索引
 
-### 小知识点
+### 前提
 
 1. innodb支持b+树索引，hash索引，全文索引。
-2. b+树索引用的最多
-3. b+树索引只能根据键找到磁盘上对应的数据页而不能找到对应的行，需要将该数据页加载到内存中，然后查找对应的行
-4. 如果创建表的时候没有指定主键，如果有非空的唯一索引，那么选取第一个定义的非空唯一索引作为主键；如果不存在会自动生成一个rowid；可以查询`select _rowid from xxx;`
+2. b+树索索引的最多
+3. b+树索引只能根据键找到磁盘上对应的数据页而不能直接找到对应的行，需要将该数据页加载到内存中，然后查找对应的行
+4. 如果创建表的时候没有指定主键，如果有非空的唯一索引，那么选取第一个定义的非空唯一索引作为主键；如果不存在会自动生成一个6字节rowid；可以查询`select _rowid from xxx;`
 5. 索引页在逻辑上是有序的，也就是数据在逻辑上按照索引组织，但是索引页在物理上可以是无序的
 6. 当优化器选错索引是，可以使用`force index(xxx)`强制使用某个索引
 
@@ -149,9 +152,22 @@ b+树索引通常在生成上的树高为2-4，那么逻辑IO只有2-4，假如�
 
 辅助索引又称之为二级索引，也是采用b+树实现，当根据二级索引查询的时候，如果要查找的数据不是二级索引树上叶子节点上的数据（索引值本身，主键），那么会根据主键值进行回表：扫描主键索引树。
 
-在组合索引中，可以使用前缀匹配：匹配前n个字符或者前m个字段，组合索引的排序方式是先排第一个字段，第一个字段相同在排其他字段。假如组合索引不是主键，在查询的时候也需要回表，但是在5.6之后引入了索引下推，如果要查询的值是主键或者是组合索引中的值，就可以不回表。
+在组合索引中，可以使用前缀匹配：匹配前n个字符或者前m个字段，组合索引的排序方式是先排第一个字段，第一个字段相同再排其他字段。假如组合索引不是主键，在查询的时候也需要回表，但是在5.6之后引入了索引下推，如果要查询的值是主键或者是组合索引中的值，就可以不回表。
 
-#### 索引管理
+
+### 哈希索引
+- 哈希算法：k=spance_id<<20+spance_id+offset
+- 通过除法散列到各个槽
+- 拉链法解决冲突
+
+### 全文索引
+使用倒排索引来实现。
+
+在一个辅助表中存储了单词与单词在一个或多个文档的映射，使用关联数组实现：
+- inverted file index ，{单词，单词所在的文档的id}
+- full inverted index ，{单词，（所在的文档的id，具体的位置）}
+
+### 索引管理
 
 ```sql
 mysql> show index from test1;
@@ -177,7 +193,9 @@ mysql> show index from test1;
 - ubdex_type:索引类型
 - comment：注释
 
-#### MRR（Multi-Range Read）优化
+## 索引优化
+
+### MRR（Multi-Range Read）优化
 
 工作方式：
 1. 将通过辅助索引查询的数据存放到一个缓存中，也就是主键值
@@ -189,20 +207,57 @@ mysql> show index from test1;
 2. 减少缓冲池中页被替换的次数
 3. 批量处理对减值的查询操作
 
-#### Index Condition Pushdown（ICP）优化
+### Index Condition Pushdown（ICP）优化
 在根据索引查询时，会在引擎层判断是否可以使用where进行过滤，而不是将数据返回server层在过滤。用在联合索引上。
 
-### 哈希索引
-- 哈希算法：k=spance_id<<20+spance_id+offset
-- 通过除法散列到各个槽
-- 拉链法解决冲突
 
-### 全文索引
-使用倒排索引来实现。
+### descending indexes（降序索引）
+MySQL支持降序索引，在创建索引的时候添加`asc 或者 desc`
 
-在一个辅助表中存储了单词与单词在一个或多个文档的映射，使用关联数组实现：
-- inverted file index ，{单词，单词所在的文档的id}
-- full inverted index ，{单词，（所在的文档的id，具体的位置）}
+例子：
+```sql
+CREATE TABLE t (
+  c1 INT, c2 INT,
+  INDEX idx1 (c1 ASC, c2 ASC),
+  INDEX idx2 (c1 ASC, c2 DESC),
+  INDEX idx3 (c1 DESC, c2 ASC),
+  INDEX idx4 (c1 DESC, c2 DESC)
+);
+```
+```sql
+ORDER BY c1 ASC, c2 ASC    -- optimizer can use idx1
+ORDER BY c1 DESC, c2 DESC  -- optimizer can use idx4
+ORDER BY c1 ASC, c2 DESC   -- optimizer can use idx2
+ORDER BY c1 DESC, c2 ASC   -- optimizer can use idx3
+```
+
+### 使用索引扩展（use of index extensions）
+
+InnodB会自动的扩展二级索引：添加主键到二级索引中。
+
+比如:
+```sql
+CREATE TABLE t1 (
+  i1 INT NOT NULL DEFAULT 0,
+  i2 INT NOT NULL DEFAULT 0,
+  d DATE DEFAULT NULL,
+  PRIMARY KEY (i1, i2),
+  INDEX k_d (d)
+) ENGINE = InnoDB;
+```
+实际上：二级索引是：(d,i1,i2)
+
+比如：
+```sql
+mysql>  EXPLAIN SELECT COUNT(*) FROM t3 WHERE i1 = 3 AND d = '2000-01-01';
++----+-------------+-------+------------+------+---------------+------+---------+-------------+------+----------+-------------+
+| id | select_type | table | partitions | type | possible_keys | key  | key_len | ref         | rows | filtered | Extra       |
++----+-------------+-------+------------+------+---------------+------+---------+-------------+------+----------+-------------+
+|  1 | SIMPLE      | t3    | NULL       | ref  | PRIMARY,k_d   | k_d  | 8       | const,const |    1 |   100.00 | Using index |
++----+-------------+-------+------------+------+---------------+------+---------+-------------+------+----------+-------------+
+
+```
+可以看到，key_len 是8字节（d是4字节），而ref也是两个const，rows是1（在我的数据库中满足d = '2000-01-01'的rows应该是5）.
 
 ## 实践
 
