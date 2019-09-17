@@ -15,7 +15,6 @@ category: 数据库
   - [prometheus架构图](#prometheus%E6%9E%B6%E6%9E%84%E5%9B%BE)
   - [原生设计](#%E5%8E%9F%E7%94%9F%E8%AE%BE%E8%AE%A1)
   - [项目](#%E9%A1%B9%E7%9B%AE)
-  - [自己的设计](#%E8%87%AA%E5%B7%B1%E7%9A%84%E8%AE%BE%E8%AE%A1)
 
 ## prometheus架构图
 
