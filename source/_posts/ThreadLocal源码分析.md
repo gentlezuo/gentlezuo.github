@@ -61,7 +61,7 @@ java.lang.ThreadLocal@31c6e548 81  Thread[Thread-8,5,main]
 java.lang.ThreadLocal@31c6e548 40  Thread[Thread-7,5,main]
 ```
 
-从上可以看出，每一个线程都共享同一个ThreadLocal，但是他们又存有一个局部变量，这里是一个Integer，每一个局部变量都不影响对方的存在。
+从上可以看出，每一个线程都共享同一个ThreadLocal，但是他们又存有一个线程局部变量，这里是一个Integer，每一个局部变量都不影响对方的存在。
 
 
 
