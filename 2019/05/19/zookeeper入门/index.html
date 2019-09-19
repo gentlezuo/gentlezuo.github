@@ -22,20 +22,20 @@
 <h3 id="节点和短暂节点"><a href="#节点和短暂节点" class="headerlink" title="节点和短暂节点"></a>节点和短暂节点</h3><p>zookeeper中的每一个节点都可以关联数据，拥有子节点，就像是“文件夹”一样。</p>
 <h4 id="stat结构："><a href="#stat结构：" class="headerlink" title="stat结构："></a>stat结构：</h4><p>Znodes维护一个stat结构，其中包括数据更改、ACL（access control list）更改和时间戳的版本号，以允许缓存验证和协调更新。每次znode的数据发生变化，版本号都会增加。</p>
 <ul>
-<li>cZxid: 创建znode的更改的事务ID</li>
-<li>mZxid: znode最后一次修改的更改的事务ID</li>
-<li>pZxid: znode关于添加和移除子结点更改的事务ID</li>
+<li>cZxid: <strong>创建</strong>znode的更改的事务ID</li>
+<li>mZxid: znode最后一次<strong>修改</strong>的更改的事务ID</li>
+<li>pZxid: znode关于<strong>添加和移除子结点</strong>更改的事务ID</li>
 <li>ctime: 表示znode的创建时间 (以毫秒为单位)</li>
 <li>mtime: 表示znode的最后一次修改时间 (以毫秒为单位)</li>
-<li>dataVersion: znode上数据变化的次数</li>
-<li>cversion: znode子结点变化的次数</li>
+<li>dataVersion: znode上<strong>数据变化</strong>的次数</li>
+<li>cversion: znode<strong>子结点变化</strong>的次数</li>
 <li>aclVersion znode结点上ACL变化的次数</li>
 <li>ephemeralOwner: 如果znode是短暂类型的结点，这代表了znode拥有者的session ID，如果znode不是短暂类型的结点，这个值为0</li>
 <li>dataLength: znode数据域的长度</li>
 <li>numChildren: znode中子结点的个数</li>
 </ul>
-<p>存储在命名空间中每个znode的数据以原子方式读写。读取获取与znode相关联的所有数据字节，写入替换所有数据。每个节点都有一个访问控制列表（ACL），该列表限制了谁可以做什么。类似linux中的文件的权限控制。</p>
-<h4 id="持久节点和短暂节点"><a href="#持久节点和短暂节点" class="headerlink" title="持久节点和短暂节点"></a>持久节点和短暂节点</h4><p>节点可以分为两种：持久节点，短暂节点。<br>持久节点就是平时使用的节点，只要不删除它，它会一直存在，与之对应的<br>短暂节点：只要创建节点的会话还是active的，那么这个节点就会存在，否则这个节点会被删除。也就是时候它是临时存在的。当然也可以显示的删除。并且短暂节点不能有子节点。</p>
+<p>存储在命名空间中每个znode的数据<strong>以原子方式读写</strong>。读取获取与znode相关联的所有数据字节，写入替换所有数据。每个节点都有一个访问控制列表（ACL），该列表限制了谁可以做什么。类似linux中的文件的权限控制。</p>
+<h4 id="持久节点和短暂节点"><a href="#持久节点和短暂节点" class="headerlink" title="持久节点和短暂节点"></a>持久节点和短暂节点</h4><p>节点可以分为两种：持久节点，短暂节点。<br>持久节点就是平时使用的节点，只要不删除它，它会一直存在，与之对应的<br>短暂节点：只要创建节点的会话还是active的，那么这个节点就会存在，否则这个节点会被删除。也就是时候它是临时存在的。当然也可以显示的删除。并且<strong>短暂节点不能有子节点</strong>。</p>
 <h3 id="有条件的更新和监视"><a href="#有条件的更新和监视" class="headerlink" title="有条件的更新和监视"></a>有条件的更新和监视</h3><p>想想一下如果没有监听，那么客户端每次访问服务端都要获取所有的数据，那么代价会很大。如果需要实时的了解服务端的变化，那么需要轮询服务器，代价太大，而zookeeper使用监听器：<br>zookeeper支持在监听。客户端可以再znode设置一个监听器，当这个znode发生变化时，这个监听器会被触发，然后发送一条数据给客户端，然后这个监听器会被<strong>删除</strong>，也就是一个监听器只能使用一次。</p>
 <p>每一个节点都有一个版本号，随着数据变更而递增，如果需要更改某个节点，那么命令所携带的版本参数必须正确，否则会失败。</p>
 <h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><ul>
