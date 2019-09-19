@@ -11,7 +11,7 @@ category: java并发编程
 
 ## 线程的几种状态
 <!--more-->
-线程从创建到死亡会经历很多的状态：创建，就绪，执行，阻塞，waiting，time_waiting，死亡。waiting和time_wait属于block
+线程从创建到死亡会经历很多的状态：创建，（就绪，执行），阻塞，waiting，time_waiting，死亡。waiting和time_wait属于block
 
 Thread内部类，线程的状态
 ```java
@@ -41,7 +41,7 @@ public enum State {
 
 但是如果在执行期间线程已经完成了工作，那么就直接死亡；
 
-在执行期间可能会主动进入waiting状态，此时他会释放锁和资源；
+在执行期间可能会主动进入waiting状态，此时它会释放锁和资源；
 
 在执行期间也可能进入sleep状态，但是不会释放自己所获得的资源（包括锁）；
 
@@ -140,7 +140,7 @@ now thread: 12 exit synchronized
 7. interrupt()方法可以中断一个阻塞的线程
 
 
-注意join(),join(time),sleep(time),yield()不释放锁
+注意sleep(time),yield()不释放锁
 
 
 关于一些获取属性的方法，以get开头的方法，比如getId，getName等。

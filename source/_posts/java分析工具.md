@@ -143,7 +143,7 @@ $ jconsole -interval=5 22143
 
 ## jcmd
 
-jcmd的公共更强
+jcmd的功能更强
 
 ### 用法
 

@@ -38,7 +38,7 @@ git地址: [https://github.com/prometheus](https://github.com/prometheus)
 ### 工作流程
 其大概的工作流程是：
 
-- Prometheus server 定期从配置好的 jobs 或者 exporters 中拉 metrics，或者接收来自 Pushgateway 发过来的 metrics，或者从其他的 Prometheus server 中拉 metrics。
+- Prometheus server 定期从配置好的 jobs 或者 exporters 中拉 metrics，或者pull来自 Pushgateway 的 metrics，或者从其他的 Prometheus server 中拉 metrics。
 - Prometheus server 在本地存储收集到的 metrics（保存在`data`目录下），并运行已定义好的 alert.rules，记录新的时间序列或者向 Alertmanager 推送警报。
 - Alertmanager 根据配置文件，对接收到的警报进行处理，发出告警。
 - 在图形界面中，可视化采集数据。
