@@ -76,8 +76,30 @@ public synchronized StringBuffer reverse() {
 
 String是使用char数组实现的。
 
-如何理解String不可变
+#### 如何理解String不可变
+
 1. String类被final修饰，无法继承
 2. char[] value被final修饰，无法改变引用的数组
 3. String没有提供更改数组内部值的方法
 4. 如果是字面值常量的话，为了防止重复创造对象，会将相同的字符串放在常量池。
+
+#### String的hashcode
+
+计算方法：hash=s[0]*31^(n-1)+s[1]*31^(n-2)+s[n-1]
+
+为什么选用31：
+1. 质数，不易冲突
+2. x*31可以优化为`x<<5-x`
+3. 质数小容易冲突，质数大会造成hash很大，很分散，而且会溢出损失精度
+
+### String的最佳实践
+
+以下转自 [https://segmentfault.com/a/1190000007099818](https://segmentfault.com/a/1190000007099818)
+
+1. 不适用`+`，特别是在循环中
+2. 使用stringBuilder或者StringBuffer时，尽量估算capacity，并在构造时指定，避免内存浪费和频繁的扩容复制
+3. 在没有线程安全问题时使用StringBuilder， 否则使用StringBuffer。
+4. 两个字符串拼接直接调用String.concat性能最好。
+5. 用equals时总是把能确定不为空的变量写在左边，如使用"".equals(str)判断空串，避免空指针异常。
+6. 使用str != null && str.length() == 0来判断不是空串，效率比第一点高。
+7. 在需要把其他对象转换为字符串对象时，使用String.valueOf(obj)而不是直接调用obj.toString()方法，因为前者已经对空值进行检测了，不会抛出空指针异常。
