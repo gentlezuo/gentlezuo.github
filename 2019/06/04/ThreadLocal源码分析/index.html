@@ -23,14 +23,14 @@
 <p>threadLocalHashCode是一个很重要的变量，ThreadLocal保存的值实际上是在一个Map中，而且key就是根据hashcode来计算这个值应该在数组的哪个位置。</p>
 <p>在了解这个类的工作机制之前，先了解一些其他要使用的类。</p>
 <h2 id="Entry类"><a href="#Entry类" class="headerlink" title="Entry类"></a>Entry类</h2><p>Entry类是一个数据结构类，表示一个map的节点。</p>
-<p>它继承类弱引用，当此时的线程消失，它也会被垃圾回收器回收。</p>
+<p>它继承类弱引用，当此时的线程消失，它的key就会被垃圾回收器回收。也就是会造成内存泄露，不过在ThreadLocal中会经常检查key为null的值，然后清除掉，所以避免了内存泄露。</p>
 <p>它的key就是当前的ThreadLocal，value就是保存的值。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;</span><br><span class="line">            Object value;</span><br><span class="line">            Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">                <span class="keyword">super</span>(k);</span><br><span class="line">                value = v;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 <h2 id="ThreadLocalMap"><a href="#ThreadLocalMap" class="headerlink" title="ThreadLocalMap"></a>ThreadLocalMap</h2><p>ThreadLocalMap是一个真正实现存储逻辑的一个类，上面的Entry是这个类的静态内部类。</p>
 <p>Map的数据结构是一个Entry数组实现的，而处理哈希冲突是采用线性探查法。  </p>
 <h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>ThreadLocalMap使用的解决哈希冲突的方法是线性探测法，并且删除一个节点的时候它真的删除了这个节点（有些方法是标记该位置已经被删除，而不是删除）。</p>
 <p>试想一种情况，一个ThreadLocal的实例a，它在set的的时候，hashcode&amp;(len-1)得到的位置应该10,但是从10到15都有节点，那么它被放在了16的位置，假如此时10位置（或者11,12,13等等）的位置的节点被remove掉了，下一次有重新设置a的保存的值，那么此时可能就会将它放在10位置，就存在的两个key相同节点。</p>
-<p>ThreadLocalMap并没有这个bug，那么它的解决办法是：在remove时，它会清除该节点之后的无用节点，以及将一些节点”往前挪”，也可能不往前挪，保证了一个优先级：一个节点本来应该放在一个数组的位置空闲了，那么这个节节点就会改变现在的位置来占有这个位置。</p>
+<p>ThreadLocalMap并没有这个bug，那么它的解决办法是：在remove时，它会清除该节点之后的无用节点（避免内存泄露），以及将一些节点”往前挪”（保证hash的正确性），也可能不往前挪，保证了一个优先级：一个节点本来应该放在一个数组的位置空闲了，那么这个节节点就会改变现在的位置来占有这个位置。</p>
 <p>实际上清除无用节点以及“挪动节点”很频繁，在getEntryAfterMiss，remove，replaceStaleEntry，cleanSomeSlots，expungeStaleEntries都调用了这个方法。那么它为什么不使用链地址法来解决哈希冲突呢，我认为因该是在一个线程中，ThreadLocal不会太多，所以没必要使用链地址法，经常遍历与移动也耗费不了太多时间吧。</p>
 <p>因此它具有以下成员变量：  </p>
 <h3 id="成员变量-1"><a href="#成员变量-1" class="headerlink" title="成员变量"></a>成员变量</h3><ol>
