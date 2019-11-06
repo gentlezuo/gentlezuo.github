@@ -1,3 +1,11 @@
+---
+title: jmh基准测试
+date: 2019-11-06 20:29:49
+tags:
+- java
+- 工具
+category: java
+---
 
 jmh用来对java以及其它运行在jvm上的语言进行基准测试，可以达到纳秒，微秒,毫秒，秒级别。
 <!--more-->
