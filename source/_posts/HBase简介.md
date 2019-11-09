@@ -231,12 +231,12 @@ COMMAND GROUPS:
 | is_enabled | 是否启用 | is_enabled ‘表名’ |
 | disable | 使表无效 | disable ‘表名’ |
 | is_disabled | 是否无效 | is_disabled ‘表名’ |
-| drop | 删除表 | drop的表必须是disable的 | disable ‘表名’ ,drop ‘表名’ |
+| drop | 删除表 | drop的表必须是disable的 ,disable ‘表名’ ,drop ‘表名’ |
 | clone_snapshot| 从snapshot中克隆一个新表| clone_snapshot 'snapshotName', 'tableName'|
 | snapshot | 创建一个快照| snapshot 'namespace:sourceTable', 'snapshotName', {SKIP_FLUSH => true}|
 | restore_snapshot | 从快照中恢复，快照点之后的数据被删除 | restore_snapshot 'snapshotName'|
 | list_snapshots, list_table_snapshots | 列出快照 | |
-| delete_all_snapshot, delete_snapshot, delete_table_snapshots |删除快照 |
+| delete_all_snapshot, delete_snapshot, delete_table_snapshots |删除快照 | |
 | shutdown | 关闭hbase集群（与exit不同） |  |
 | tools | 列出hbase所支持的工具 |  |
 | exit | 退出hbase shell |  |
