@@ -119,7 +119,182 @@
 <h2 id="shell命令"><a href="#shell命令" class="headerlink" title="shell命令"></a>shell命令</h2><p>可以参考 <a href="https://blog.csdn.net/vbirdbest/article/details/88236575" target="_blank" rel="noopener">https://blog.csdn.net/vbirdbest/article/details/88236575</a></p>
 <p>以<code>hbase shell</code>启动shell</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):013:0&gt; help</span><br><span class="line"></span><br><span class="line">COMMAND GROUPS:</span><br><span class="line">  Group name: general</span><br><span class="line">  Commands: processlist, status, table_help, version, whoami</span><br><span class="line"></span><br><span class="line">  Group name: ddl</span><br><span class="line">  Commands: alter, alter_async, alter_status, clone_table_schema, create, describe, disable, disable_all, drop, drop_all, enable, enable_all, exists, get_table, is_disabled, is_enabled, list, list_regions, locate_region, show_filters</span><br><span class="line"></span><br><span class="line">  Group name: namespace</span><br><span class="line">  Commands: alter_namespace, create_namespace, describe_namespace, drop_namespace, list_namespace, list_namespace_tables</span><br><span class="line"></span><br><span class="line">  Group name: dml</span><br><span class="line">  Commands: append, count, delete, deleteall, get, get_counter, get_splits, incr, put, scan, truncate, truncate_preserve</span><br><span class="line"></span><br><span class="line">  Group name: tools</span><br><span class="line">  Commands: assign, balance_switch, balancer, balancer_enabled, catalogjanitor_enabled, catalogjanitor_run, catalogjanitor_switch, cleaner_chore_enabled, cleaner_chore_run, cleaner_chore_switch, clear_block_cache, clear_compaction_queues, clear_deadservers, close_region, compact, compact_rs, compaction_state, flush, hbck_chore_run, is_in_maintenance_mode, list_deadservers, major_compact, merge_region, move, normalize, normalizer_enabled, normalizer_switch, split, splitormerge_enabled, splitormerge_switch, stop_master, stop_regionserver, trace, unassign, wal_roll, zk_dump</span><br><span class="line"></span><br><span class="line">  Group name: replicat‘ion</span><br><span class="line">  Commands: add_peer, append_peer_exclude_namespaces, append_peer_exclude_tableCFs, append_peer_namespaces, append_peer_tableCFs, disable_peer, disable_table_replication, enable_peer, enable_table_replication, get_peer_config, list_peer_configs, list_peers, list_replicated_tables, remove_peer, remove_peer_exclude_namespaces, remove_peer_exclude_tableCFs, remove_peer_namespaces, remove_peer_tableCFs, set_peer_bandwidth, set_peer_exclude_namespaces, set_peer_exclude_tableCFs, set_peer_namespaces, set_peer_replicate_all, set_peer_serial, set_peer_tableCFs, show_peer_tableCFs, update_peer_config</span><br><span class="line"></span><br><span class="line">  Group name: snapshots</span><br><span class="line">  Commands: clone_snapshot, delete_all_snapshot, delete_snapshot, delete_table_snapshots, list_snapshots, list_table_snapshots, restore_snapshot, snapshot</span><br><span class="line"></span><br><span class="line">  Group name: configuration</span><br><span class="line">  Commands: update_all_config, update_config</span><br><span class="line"></span><br><span class="line">  Group name: quotas</span><br><span class="line">  Commands: list_quota_snapshots, list_quota_table_sizes, list_quotas, list_snapshot_sizes, set_quota</span><br><span class="line"></span><br><span class="line">  Group name: security</span><br><span class="line">  Commands: grant, list_security_capabilities, revoke, user_permission</span><br><span class="line"></span><br><span class="line">  Group name: procedures</span><br><span class="line">  Commands: list_locks, list_procedures</span><br><span class="line"></span><br><span class="line">  Group name: visibility labels</span><br><span class="line">  Commands: add_labels, clear_auths, get_auths, list_labels, set_auths, set_visibility</span><br><span class="line"></span><br><span class="line">  Group name: rsgroup</span><br><span class="line">  Commands: add_rsgroup, balance_rsgroup, get_rsgroup, get_server_rsgroup, get_table_rsgroup, list_rsgroups, move_namespaces_rsgroup, move_servers_namespaces_rsgroup, move_servers_rsgroup, move_servers_tables_rsgroup, move_tables_rsgroup, remove_rsgroup, remove_servers_rsgroup</span><br></pre></td></tr></table></figure>
-<p>常用命令<br>|命名 | 描述 | 语法 |<br>| — | — | — |<br>| help ‘命名名’ | 查看命令的使用描述 | help ‘命令名’ |<br>| whoami | 我是谁 | whoami |<br>| version | 返回hbase版本信息 | version |<br>| status | 返回hbase集群的状态信息 | status |<br>| table_help | 查看如何操作表 | table_help |<br>| create | 创建表 | create ‘表名’, ‘列族名1’, ‘列族名2’, ‘列族名N’ |<br>| alter | 修改列族 | 添加一个列族：alter ‘表名’, ‘列族名’ ;删除列族：alter ‘表名’, {NAME=&gt; ‘列族名’, METHOD=&gt; ‘delete’} |<br>| describe | 显示表相关的详细信息 | describe ‘表名’ |<br>| list | 列出hbase中存在的所有表 | list |<br>| exists | 测试表是否存在 | exists ‘表名’ |<br>| put | 添加或修改的表的值 | put ‘表名’, ‘行键’, ‘列族名:列名’, ‘列值’ |<br>| append |在一个单元格内追加数据| append ‘talbeName’,’rowkey’,’cf:col’,’val’|<br>| scan | 通过对表的扫描来获取对用的值 | scan ‘表名’ ; 扫描某个列族： scan ‘表名’, {COLUMN=&gt;‘列族名’} ;扫描某个列族的某个列： scan ‘表名’, {COLUMN=&gt;‘列族名:列名’} ;查询同一个列族的多个列： scan ‘表名’, {COLUMNS =&gt; [ ‘列族名1:列名1’, ‘列族名1:列名2’, …]} |<br>| get | 获取行或单元（cell）的值 | get ‘表名’, ‘行键’ ;get ‘表名’, ‘行键’, ‘列族名’ |<br>| count | 统计表中行的数量 | count ‘表名’ |<br>| incr | 增加指定表行或列的值 | incr ‘表名’, ‘行键’, ‘列族:列名’, 步长值 |<br>| get_counter | 获取计数器 | get_counter ‘表名’, ‘行键’, ‘列族:列名’ |<br>| delete | 删除指定对象的值（可以为表，行，列对应的值，另外也可以指定时间戳的值） | 删除列族的某个列： delete ‘表名’, ‘行键’, ‘列族名:列名’ |<br>| deleteall | 删除指定行的所有元素值 | deleteall ‘表名’, ‘行键’ |<br>| truncate | 重新创建指定表 | truncate ‘表名’ |<br>| enable | 使表有效 | enable ‘表名’ |<br>| is_enabled | 是否启用 | is_enabled ‘表名’ |<br>| disable | 使表无效 | disable ‘表名’ |<br>| is_disabled | 是否无效 | is_disabled ‘表名’ |<br>| drop | 删除表 | drop的表必须是disable的 | disable ‘表名’ ,drop ‘表名’ |<br>| clone_snapshot| 从snapshot中克隆一个新表| clone_snapshot ‘snapshotName’, ‘tableName’|<br>| snapshot | 创建一个快照| snapshot ‘namespace:sourceTable’, ‘snapshotName’, {SKIP_FLUSH =&gt; true}|<br>| restore_snapshot | 从快照中恢复，快照点之后的数据被删除 | restore_snapshot ‘snapshotName’|<br>| list_snapshots, list_table_snapshots | 列出快照 | |<br>| delete_all_snapshot, delete_snapshot, delete_table_snapshots |删除快照 |<br>| shutdown | 关闭hbase集群（与exit不同） |  |<br>| tools | 列出hbase所支持的工具 |  |<br>| exit | 退出hbase shell |  |</p>
+<p>常用命令</p>
+<table>
+<thead>
+<tr>
+<th>命名</th>
+<th>描述</th>
+<th>语法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>help ‘命名名’</td>
+<td>查看命令的使用描述</td>
+<td>help ‘命令名’</td>
+</tr>
+<tr>
+<td>whoami</td>
+<td>我是谁</td>
+<td>whoami</td>
+</tr>
+<tr>
+<td>version</td>
+<td>返回hbase版本信息</td>
+<td>version</td>
+</tr>
+<tr>
+<td>status</td>
+<td>返回hbase集群的状态信息</td>
+<td>status</td>
+</tr>
+<tr>
+<td>table_help</td>
+<td>查看如何操作表</td>
+<td>table_help</td>
+</tr>
+<tr>
+<td>create</td>
+<td>创建表</td>
+<td>create ‘表名’, ‘列族名1’, ‘列族名2’, ‘列族名N’</td>
+</tr>
+<tr>
+<td>alter</td>
+<td>修改列族</td>
+<td>添加一个列族：alter ‘表名’, ‘列族名’ ;删除列族：alter ‘表名’, {NAME=&gt; ‘列族名’, METHOD=&gt; ‘delete’}</td>
+</tr>
+<tr>
+<td>describe</td>
+<td>显示表相关的详细信息</td>
+<td>describe ‘表名’</td>
+</tr>
+<tr>
+<td>list</td>
+<td>列出hbase中存在的所有表</td>
+<td>list</td>
+</tr>
+<tr>
+<td>exists</td>
+<td>测试表是否存在</td>
+<td>exists ‘表名’</td>
+</tr>
+<tr>
+<td>put</td>
+<td>添加或修改的表的值</td>
+<td>put ‘表名’, ‘行键’, ‘列族名:列名’, ‘列值’</td>
+</tr>
+<tr>
+<td>append</td>
+<td>在一个单元格内追加数据</td>
+<td>append ‘talbeName’,’rowkey’,’cf:col’,’val’</td>
+</tr>
+<tr>
+<td>scan</td>
+<td>通过对表的扫描来获取对用的值</td>
+<td>scan ‘表名’ ; 扫描某个列族： scan ‘表名’, {COLUMN=&gt;‘列族名’} ;扫描某个列族的某个列： scan ‘表名’, {COLUMN=&gt;‘列族名:列名’} ;查询同一个列族的多个列： scan ‘表名’, {COLUMNS =&gt; [ ‘列族名1:列名1’, ‘列族名1:列名2’, …]}</td>
+</tr>
+<tr>
+<td>get</td>
+<td>获取行或单元（cell）的值</td>
+<td>get ‘表名’, ‘行键’ ;get ‘表名’, ‘行键’, ‘列族名’</td>
+</tr>
+<tr>
+<td>count</td>
+<td>统计表中行的数量</td>
+<td>count ‘表名’</td>
+</tr>
+<tr>
+<td>incr</td>
+<td>增加指定表行或列的值</td>
+<td>incr ‘表名’, ‘行键’, ‘列族:列名’, 步长值</td>
+</tr>
+<tr>
+<td>get_counter</td>
+<td>获取计数器</td>
+<td>get_counter ‘表名’, ‘行键’, ‘列族:列名’</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>删除指定对象的值（可以为表，行，列对应的值，另外也可以指定时间戳的值）</td>
+<td>删除列族的某个列： delete ‘表名’, ‘行键’, ‘列族名:列名’</td>
+</tr>
+<tr>
+<td>deleteall</td>
+<td>删除指定行的所有元素值</td>
+<td>deleteall ‘表名’, ‘行键’</td>
+</tr>
+<tr>
+<td>truncate</td>
+<td>重新创建指定表</td>
+<td>truncate ‘表名’</td>
+</tr>
+<tr>
+<td>enable</td>
+<td>使表有效</td>
+<td>enable ‘表名’</td>
+</tr>
+<tr>
+<td>is_enabled</td>
+<td>是否启用</td>
+<td>is_enabled ‘表名’</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>使表无效</td>
+<td>disable ‘表名’</td>
+</tr>
+<tr>
+<td>is_disabled</td>
+<td>是否无效</td>
+<td>is_disabled ‘表名’</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>删除表</td>
+<td>drop的表必须是disable的</td>
+<td>disable ‘表名’ ,drop ‘表名’</td>
+</tr>
+<tr>
+<td>clone_snapshot</td>
+<td>从snapshot中克隆一个新表</td>
+<td>clone_snapshot ‘snapshotName’, ‘tableName’</td>
+</tr>
+<tr>
+<td>snapshot</td>
+<td>创建一个快照</td>
+<td>snapshot ‘namespace:sourceTable’, ‘snapshotName’, {SKIP_FLUSH =&gt; true}</td>
+</tr>
+<tr>
+<td>restore_snapshot</td>
+<td>从快照中恢复，快照点之后的数据被删除</td>
+<td>restore_snapshot ‘snapshotName’</td>
+</tr>
+<tr>
+<td>list_snapshots, list_table_snapshots</td>
+<td>列出快照</td>
+<td></td>
+</tr>
+<tr>
+<td>delete_all_snapshot, delete_snapshot, delete_table_snapshots</td>
+<td>删除快照</td>
+</tr>
+<tr>
+<td>shutdown</td>
+<td>关闭hbase集群（与exit不同）</td>
+<td></td>
+</tr>
+<tr>
+<td>tools</td>
+<td>列出hbase所支持的工具</td>
+<td></td>
+</tr>
+<tr>
+<td>exit</td>
+<td>退出hbase shell</td>
+</tr>
+</tbody>
+</table>
 <p>这些命令都可以通过help ‘xxx’查询，并且都是Ruby格式的脚本。</p>
 <h2 id="脚本使用"><a href="#脚本使用" class="headerlink" title="脚本使用"></a>脚本使用</h2><ol>
 <li>开启集群<code>start-hbase.sh</code></li>
