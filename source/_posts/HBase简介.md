@@ -3,10 +3,8 @@ title: HBase简介
 date: 2019-11-09 01:19:39
 tags: 
 - HBase
-- 大数据
-category: 
-- Hbase
-- 大数据
+- nosql
+category: 大数据
 ---
 
 HBase是一个分布式，可扩展，多版本，大数据存储的非关系型数据库。
@@ -14,6 +12,7 @@ HBase是一个分布式，可扩展，多版本，大数据存储的非关系型
 
 - [简介](#%e7%ae%80%e4%bb%8b)
 - [特点](#%e7%89%b9%e7%82%b9)
+- [缺点](#%e7%bc%ba%e7%82%b9)
 - [架构](#%e6%9e%b6%e6%9e%84)
   - [HMaste](#hmaste)
   - [HRegionServer](#hregionserver)
@@ -49,6 +48,12 @@ HBase是一个分布式，可扩展，多版本，大数据存储的非关系型
 6. wal预写日志，几乎所有的数据库都会采用wal技术
 7. 支持通过Hadoop指标子系统将指标导出到文件或Ganglia；或者jmx
 
+## 缺点
+1. 单一rowkey导致多维查询效率低下
+2. 不直接支持SQL
+3. 仅支持行级事务
+
+当然，这些都可以被其他中间件解决，比如phoenix
 ## 架构
 
 ![架构](/HBase简介/hbase架构.jpg)
