@@ -4,6 +4,7 @@ date: 2019-11-09 01:19:39
 tags: 
 - HBase
 - nosql
+- 数据库
 category: 大数据
 ---
 

@@ -4,6 +4,7 @@ date: 2019-04-19 12:41:42
 tags:
 - Redis
 - NoSql
+- 数据库
 category: 数据库
 ---
 
