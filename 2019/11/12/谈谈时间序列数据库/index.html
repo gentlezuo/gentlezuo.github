@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="谈谈时间序列数据库"><meta name="keywords" content="nosql,数据库"><meta name="author" content="gentlezuo"><meta name="copyright" content="gentlezuo"><title>谈谈时间序列数据库 | gentlezuo的博客</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是时间序列数据"><span class="toc-number">1.</span> <span class="toc-text">什么是时间序列数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时序数据格式"><span class="toc-number">2.</span> <span class="toc-text">时序数据格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时序数据的应用场景"><span class="toc-number">3.</span> <span class="toc-text">时序数据的应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间序列数据的特点"><span class="toc-number">4.</span> <span class="toc-text">时间序列数据的特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见时序数据库对比"><span class="toc-number">5.</span> <span class="toc-text">常见时序数据库对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#opentsdb"><span class="toc-number">5.1.</span> <span class="toc-text">opentsdb</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus"><span class="toc-number">5.2.</span> <span class="toc-text">prometheus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#influxdb"><span class="toc-number">5.3.</span> <span class="toc-text">influxdb</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计一种时序数据库"><span class="toc-number">6.</span> <span class="toc-text">设计一种时序数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#功能点"><span class="toc-number">6.1.</span> <span class="toc-text">功能点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储"><span class="toc-number">6.2.</span> <span class="toc-text">存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读写流程"><span class="toc-number">6.3.</span> <span class="toc-text">读写流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式存储"><span class="toc-number">6.4.</span> <span class="toc-text">分布式存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它"><span class="toc-number">6.5.</span> <span class="toc-text">其它</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://s2.ax1x.com/2019/03/29/A0hzi6.jpg"></div><div class="author-info__name text-center">gentlezuo</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/gentlezuo">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">52</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">26</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">16</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://s2.ax1x.com/2019/03/29/ABlpl9.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">gentlezuo的博客</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span></div><div id="post-info"><div id="post-title">谈谈时间序列数据库</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-11-12</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/时序数据库/">时序数据库</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">3.1k</span><span class="post-meta__separator">|</span><span>阅读时长: 9 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>什么是时序数据库，能干什么，市面上有哪些实现，怎么实现的，能不能自己设计一款产品？<br><a id="more"></a></p>
+<ul>
+<li><a href="#%e4%bb%80%e4%b9%88%e6%98%af%e6%97%b6%e9%97%b4%e5%ba%8f%e5%88%97%e6%95%b0%e6%8d%ae">什么是时间序列数据</a></li>
+<li><a href="#%e6%97%b6%e5%ba%8f%e6%95%b0%e6%8d%ae%e6%a0%bc%e5%bc%8f">时序数据格式</a></li>
+<li><a href="#%e6%97%b6%e5%ba%8f%e6%95%b0%e6%8d%ae%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af">时序数据的应用场景</a></li>
+<li><a href="#%e6%97%b6%e9%97%b4%e5%ba%8f%e5%88%97%e6%95%b0%e6%8d%ae%e7%9a%84%e7%89%b9%e7%82%b9">时间序列数据的特点</a></li>
+<li><a href="#%e5%b8%b8%e8%a7%81%e6%97%b6%e5%ba%8f%e6%95%b0%e6%8d%ae%e5%ba%93%e5%af%b9%e6%af%94">常见时序数据库对比</a><ul>
+<li><a href="#opentsdb">opentsdb</a></li>
+<li><a href="#prometheus">prometheus</a></li>
+<li><a href="#influxdb">influxdb</a></li>
+</ul>
+</li>
+<li><a href="#%e8%ae%be%e8%ae%a1%e4%b8%80%e7%a7%8d%e6%97%b6%e5%ba%8f%e6%95%b0%e6%8d%ae%e5%ba%93">设计一种时序数据库</a><ul>
+<li><a href="#%e5%8a%9f%e8%83%bd%e7%82%b9">功能点</a></li>
+<li><a href="#%e5%ad%98%e5%82%a8">存储</a></li>
+<li><a href="#%e8%af%bb%e5%86%99%e6%b5%81%e7%a8%8b">读写流程</a></li>
+<li><a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e5%ad%98%e5%82%a8">分布式存储</a></li>
+<li><a href="#%e5%85%b6%e5%ae%83">其它</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="什么是时间序列数据"><a href="#什么是时间序列数据" class="headerlink" title="什么是时间序列数据"></a>什么是时间序列数据</h2><p>时间序列数据就是一个数据源会每隔一段时间产生一条数据，除了时间戳和值不一样，其他都相同。比如一个cpu的使用率，随着时间的变化不断变化，那么它产生的数据就是时间序列数据。</p>
+<h2 id="时序数据格式"><a href="#时序数据格式" class="headerlink" title="时序数据格式"></a>时序数据格式</h2><p>时间序列数据的格式为：<code>key,timestamp,val</code>,实际上就是带有时间戳的键值对。当然这是最简单的格式，在现实的使用中，格式会更加复杂，复杂的主要是适应业务。举例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cpu_use&#123;ip=&apos;10.27.120.7&apos;,id=&apos;3&apos;&#125; 948258276 14.5%</span><br><span class="line">cpu_use&#123;ip=&apos;10.27.120.7&apos;,id=&apos;3&apos;&#125; 948258286 14.0%</span><br><span class="line">cpu_use&#123;ip=&apos;10.27.120.7&apos;,id=&apos;3&apos;&#125; 948258296 13.5%</span><br><span class="line">gc_count&#123;ip=&apos;9.11.132.9&apos;,port=&apos;8976&apos;&#125; 948278275 18</span><br></pre></td></tr></table></figure>
+<p>这种数据格式的数据更加有用，对于第一条数据key就是cpu_use{ip=’10.27.120.7’,id=’3’}，第二条数据key就是gc_count{ip=’9.11.132.9’,port=’8976’}。</p>
+<p>针对这种形式的时间序列，cpu_use就是metric，ip，id，port就是tag，每个tag对应着值。</p>
+<h2 id="时序数据的应用场景"><a href="#时序数据的应用场景" class="headerlink" title="时序数据的应用场景"></a>时序数据的应用场景</h2><p>时间序列数据多用于监控系统中，比如服务器的cpu利用率，io，内存等指标；对于jvm的有gc时长，次数，线程数，堆大小；对于业务有请求数，请求耗时等等。</p>
+<p>在穿戴设备中也会用到时间序列，比如心率，体温随时间的变化。</p>
+<h2 id="时间序列数据的特点"><a href="#时间序列数据的特点" class="headerlink" title="时间序列数据的特点"></a>时间序列数据的特点</h2><ol>
+<li>持续的稳定的产生着数据，除了值无法预见，其它都可以预见，不存在波峰波谷</li>
+<li>总是写多，不会修改，删除总是一段一段的删除</li>
+<li>读总是关注最近一段时间</li>
+<li>一段时间内的数据具有聚合价值</li>
+<li>多维，也就是多个tag</li>
+</ol>
+<h2 id="常见时序数据库对比"><a href="#常见时序数据库对比" class="headerlink" title="常见时序数据库对比"></a>常见时序数据库对比</h2><p>市面上有许多时间序列数据库，在<a href="https://db-engines.com/en/ranking/time+series+dbms" target="_blank" rel="noopener">https://db-engines.com/en/ranking/time+series+dbms</a>可以看见时间序列数据库的排名。最专业的应该是influxdb。这里对比三种opentsdb，prometheus，influxdb。</p>
+<h3 id="opentsdb"><a href="#opentsdb" class="headerlink" title="opentsdb"></a>opentsdb</h3><p>opentsdb依赖hbase，opentsdb建立了4张表存储数据：</p>
+<ul>
+<li>tsdb: 存储实际的时序数据</li>
+<li>tsdb-uid: 存储 name 和 uid 的相互映射关系，也就是给字符串的键、值映射成数值，包括 metric、tagk、tagv </li>
+<li>tsdb-meta: 元数据表：用来存储元数据</li>
+<li>tsdb-tree: 树形表</li>
+</ul>
+<p>真实的数据存在tsdb上，rowkey的设计是<code></code>[salt]&lt;metric_uid&gt;<timestamp><tagk1><tagv1>[…<tagkn><tagvn>]`，salt是为了防止热点数据集中，是hbase rowkey设计的常用方式，接下来是metric_uid，它对应着一个指标名，至于为什么不适用指标的字符串形式，是因为冗余太大，浪费空间，接下来是小时级别的时间戳，接下来是tag的key和value（也经过编码）。</tagvn></tagkn></tagv1></tagk1></timestamp></p>
+<p>这样设计意味着一个来自于同一个地方的指标名，一个小时一行数据，如果一秒一条数据的话就会有3600个列。只有一个列簇，列的设计不赘述。</p>
+<p>根据时序数据的特点可以看出这样设计的好处：</p>
+<ol>
+<li>一个小时的数据一行，容易范围查询</li>
+<li>一个列簇，一个指标的数据在一个文件中</li>
+</ol>
+<p>但是opentsdb的缺点显而易见：</p>
+<ol>
+<li>依赖hbase，增加维护hadoop和hbase的难度</li>
+<li>hbase上多维查询困难</li>
+<li>有很多的数据冗余，比如指标uid会存储多次，tagk，tagv也会存储多次；虽然做了编码的工作，将字符串转化为3字节的数字，但是依旧有很大的冗余</li>
+<li>聚合能力不足</li>
+</ol>
+<p>优点：</p>
+<ol>
+<li>水平扩展容易，开源</li>
+<li>使用编码，append优化了数据太过冗余</li>
+</ol>
+<h3 id="prometheus"><a href="#prometheus" class="headerlink" title="prometheus"></a>prometheus</h3><p>prometheus是一个监控系统的生态，它也实现了自己的时间序列数据库。对于监控系统来说它是很好的选择，拥有各种agent，支持多维读写，丰富的聚合函数，涵盖告警模块。关于它的介绍可以参考<a href="https://gentlezuo.github.io/2019/07/12/Prometheus%E4%BB%8B%E7%BB%8D%E4%B8%8E%E7%9B%91%E6%8E%A7mysql/">https://gentlezuo.github.io/2019/07/12/Prometheus%E4%BB%8B%E7%BB%8D%E4%B8%8E%E7%9B%91%E6%8E%A7mysql/</a></p>
+<p>prometheus数据引擎：每两个小时一个文件夹，文件夹内存储了数据，索引，元数据，倒排索引等。与lsm树类似，每隔一段时间也会进行合并。</p>
+<p>优点：</p>
+<ol>
+<li>生态很好，对于机器，各种开源软件的指标都有工具抓取</li>
+<li>提供远程读写接口，可以扩展</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>只有单机版，多实例需要自己搞定</li>
+<li>单机部署简单，但是多机复杂</li>
+</ol>
+<h3 id="influxdb"><a href="#influxdb" class="headerlink" title="influxdb"></a>influxdb</h3><p>influxdb是一款优秀的时序数据库。可以参考<a href="http://hbasefly.com/2017/12/08/influxdb-1/" target="_blank" rel="noopener">http://hbasefly.com/2017/12/08/influxdb-1/</a> </p>
+<p>它解决了opentsdb中的数据大量冗余的问题，高效压缩，还实现了倒排索引增强了多维条件查询的功能，拥有强大的聚合功能。</p>
+<h2 id="设计一种时序数据库"><a href="#设计一种时序数据库" class="headerlink" title="设计一种时序数据库"></a>设计一种时序数据库</h2><p>吸收上面几种数据库的营养，尝试自顶向下设计一款时序数据库以更好的了解它。（设计不周，只是为了更好的理解时序数据库而已）</p>
+<h3 id="功能点"><a href="#功能点" class="headerlink" title="功能点"></a>功能点</h3><ol>
+<li>写数据，类似‘cpu_use{ip=’10.27.120.7’,id=’3’}’格式</li>
+<li>读数据，按照指标名，tagk，tagv，时间过滤</li>
+<li>能够设置ttl</li>
+<li>具有一系列聚合函数</li>
+</ol>
+<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><ol>
+<li>有一个database的概念，用于逻辑分组，区分不同的业务。</li>
+</ol>
+<ol start="2">
+<li>类似influxdb，一个数据库下分为不同的Retention Policy，用于设置数据副本数，过期策略等。一个RP一个文件夹</li>
+</ol>
+<ol start="3">
+<li>在RP文件夹下就是时间分区，比如每两个小时是一个文件夹，类似prometheus，这样可以使得范围查询和ttl很容易</li>
+</ol>
+<ol start="4">
+<li>在时间分区下面应该就是表的概念或者是分组的概念，一个分组一个文件夹。可以按照metric分组，也可以按照tagk，tagv分组，也可以将它们结合起来分组。我认为应该选择第一种或者第二种，如果是第三种的话会造成很多的小文件，不仅不易管理，在查询的时候通常是有可能会查询几个分组的数据进行比较，造成很多随机IO。如果是按照metric分组，那么根据metric和模糊的tag查询很方便，如果是按照tag分组，那么一个分组代表了一个数据来源，通过来源查询更加容易，比如查询hostname 为xxx.yyy.com上的所有指标。但是在实际的情况中，总是对比同类的数据而不是同一个数据源的数据，所以这里选择第一种。（在influxdb中是按照metric+tagkv然后hash得到的分组。）</li>
+</ol>
+<p>逻辑上已经设计完成。</p>
+<p><img src="/2019/11/12/谈谈时间序列数据库/tsdb整体.png" alt></p>
+<ol start="5">
+<li>在一个分组中会有不同的tagk，tagv，如何保证读写的效率呢，如何存储呢？应该采用类似lsm树的tsm树，内存加磁盘。先写内存，内存中的数据结构应该是<code>Map&lt;key,List&lt;Entry&gt;</code>，因为metric确定，索引key应该是tagk+tagv+valueType,值应该是一个列表<code>Entry{time,value}</code>。为了防止崩溃丢失数据，应该采用WAL机制，先顺序写log，再写内存。当内存到达阈值的时候或者是log文件大小达到阈值就flush，将其刷到磁盘中产生一个文件。而且每个一段时间会进行将小文件合并。并且每隔一段时间删除过期的日志。   </li>
+</ol>
+<p><img src="/2019/11/12/谈谈时间序列数据库/tsdb表.png" alt></p>
+<p>数据在文件或内存中的逻辑格式：<br><img src="/2019/11/12/谈谈时间序列数据库/tbds数据逻辑格式.png" alt></p>
+<p>在磁盘上又应该如何存储呢？首先，一定有索引，选取tagk+tagv为索引，然后将entry按顺序存储在一起，类似redis压缩列表。因此将索引存放在文件的首部，将data存放于后面。在首部应该还有一个[startTime,endTime]用于范围查询过滤。一个文件内部有多个tagk，tagv，那么是否需要进行布隆过滤器呢？不需要的原因，每个指标每时每刻都在产生数据，所以在这一定存在；需要的理由，防止空查。因此文件可以分为两个部分：首部和data部。如下图，other中放置布隆过滤器，时间片，metric名等元数据信息。至于索引的格式，一颗树就行。</p>
+<p><img src="/2019/11/12/谈谈时间序列数据库/tsdb文件.png" alt></p>
+<p>目前使用metric+tagk+tagv很方便查询，但是如果只有tagk和tagv那么不方便，所以需要一个倒排索引。倒排索引不应该放在每一个flush后产生文件里，这样没有作用，应该放在时间分区下一个单独的文件。</p>
+<p>第一种：倒排索引格式应该是<code>Map&lt;tagk,Map&lt;tagv,List&lt;分组id&gt;&gt;&gt;</code>，这样根据tag查询，先查该文件，得到对应的分组id的列表，然后进入对应的分组，先查内存，再查文件，在文件中由于是以tagk和tagv建立的索引，因此效率较高。</p>
+<p>第二种：使用bitmap，bitmap的文件也应该放在时间分区小，每一个tag的每一个tagv对应有一个bit数组，一个数组的槽对应一个metric，也就是一个分组。这样查询的时候直接找bitmap文件中对应的几个数组然后求交集就能得到哪些metric包含这些tag。</p>
+<p>如何进行compaction？选择一定数目的文件，将其加载到内存中，然后进行归并。选择的策略可以是文件的大小，先合并小文件。最终合并为一个文件。</p>
+<p>线程：</p>
+<ul>
+<li>一个线程组写</li>
+<li>一个线程组读</li>
+<li>一个线程组用于计算</li>
+<li>一个线程组用来合并文件，删除过期日志，删除过期数据</li>
+</ul>
+<h3 id="读写流程"><a href="#读写流程" class="headerlink" title="读写流程"></a>读写流程</h3><p>写入数据流程：</p>
+<ol>
+<li>判断写入的Retention Policy</li>
+<li>进入对应的RP后，写入WAL日志，然后写入mem的Map中</li>
+<li>当mem大小到达阈值，将mem中的数据写入一个file中</li>
+<li>后台线程进行文件合并</li>
+</ol>
+<p>读数据：</p>
+<ol>
+<li>进入对应的RP</li>
+<li>根据时间间隔找到对应的一个或者几个时间分区，进入时间分区</li>
+<li>如果有metric，那么根据metric进入一个分组，然后根据tag索引进行过滤，得到数据；如果没有metric只有tag，从倒排索引文件中，获得拥有该tag的metric，然后根据metric查询对应的文件。查询的时候如果是两个小时前的数据那么一个metric对应的文件已经合并为一个文件了；如果不是，那么可能存储在多个文件，需要进行过滤，将文件的首部加载到内存中，然后根据布隆过滤器，时间段等进行过滤，之后将符合的文件索引块加载进内存，然后根据索引加载对应的数据</li>
+<li>如果涉及多个时间分区，那么查询的数据应该进行归并。如果数据太大，一次性将数据传给客户端会造成网络阻塞，因此可以更具一定的策略进行采样。</li>
+<li>如果是需要进行聚合计算的话，直接计算然后返回结果。通常计算都是计算一个窗口内的数据，因此计算可以使用滑动窗口。</li>
+</ol>
+<h3 id="分布式存储"><a href="#分布式存储" class="headerlink" title="分布式存储"></a>分布式存储</h3><p>分布式解决方案：分布式也就是设计分区的问题。</p>
+<p>暂时没有分区的好想法，但应该是主从结构，应该有一个zk或者master存储分区元数据，其它的从节点负责读写请求。</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>太过简陋，很多情况没有考虑，比如编码压缩，线程之间如何交互；细节不足，比如文件具体格式；设计有缺陷，如果一个metric的来源很大，容易造成热点数据集中，导致读、写、存、合并问题</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">gentlezuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://gentlezuo.github.io/2019/11/12/谈谈时间序列数据库/">http://gentlezuo.github.io/2019/11/12/谈谈时间序列数据库/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gentlezuo.github.io">gentlezuo的博客</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/nosql/">nosql</a><a class="post-meta__tags" href="/tags/数据库/">数据库</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/11/09/HBase运行机制概览/"><span>HBase运行机制概览</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://s2.ax1x.com/2019/03/29/ABlpl9.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By gentlezuo</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
