@@ -24,12 +24,16 @@ HBase作为一个数据库，如何写入数据，读出数据，如何写日志
   - [分类](#%e5%88%86%e7%b1%bb)
   - [触发时机](#%e8%a7%a6%e5%8f%91%e6%97%b6%e6%9c%ba)
 - [切分](#%e5%88%87%e5%88%86)
-- [HFile](#hfile)
+- [存储](#%e5%ad%98%e5%82%a8)
+  - [blockCache](#blockcache)
+  - [HFile](#hfile)
   - [HFile 索引](#hfile-%e7%b4%a2%e5%bc%95)
 - [宕机恢复](#%e5%ae%95%e6%9c%ba%e6%81%a2%e5%a4%8d)
   - [Master宕机恢复](#master%e5%ae%95%e6%9c%ba%e6%81%a2%e5%a4%8d)
   - [RS宕机](#rs%e5%ae%95%e6%9c%ba)
 - [快照](#%e5%bf%ab%e7%85%a7)
+- [zk上存储的数据](#zk%e4%b8%8a%e5%ad%98%e5%82%a8%e7%9a%84%e6%95%b0%e6%8d%ae)
+- [hbase在hdfs上的存储布局](#hbase%e5%9c%a8hdfs%e4%b8%8a%e7%9a%84%e5%ad%98%e5%82%a8%e5%b8%83%e5%b1%80)
 - [二级索引](#%e4%ba%8c%e7%ba%a7%e7%b4%a2%e5%bc%95)
   - [全局索引](#%e5%85%a8%e5%b1%80%e7%b4%a2%e5%bc%95)
   - [本地索引](#%e6%9c%ac%e5%9c%b0%e7%b4%a2%e5%bc%95)
@@ -172,8 +176,18 @@ Region写入阶段：
 1. 寻找分裂点，最大的store中的最大文件中心的一个Block的首个rowkey
 2. 分裂，修改‘hbase:meta’表，父Region下线，子Region上线。注意新的Region获得新的文件的时候是在Compaction阶段。
 
+## 存储
+存储分为内存和磁盘，memstore不再就是，就是一个跳跃表+Map。
 
-## HFile
+### blockCache
+为了提高读性能，每一个RS有一个BlockCache，BlockCache也分为几种：
+1. LRUBlockCache：是一个lru，不过进行了改造，使用了分层缓存，将缓存分为single-asscess,multi-access,in-memory，分别占到了BlockCache的25%，50%，25%。这种做法可以更有效的缓存热点数据，防止一次冷查询将热点数据挤出内存，类似MySQL的(3/8-5/8)LRU；缺点：堆内的block会被淘汰，导致gc，甚至会导致full gc，为了解决它，实现了新的cache
+2. SlabCache:使用堆外内存，不建议使用
+3. BluckCache：三种模式：heap，offheap，file，分别对应堆内存，堆外内存，文件（最好是使用SSD之类的存储介质）。在启动时，会申请大量的bucket，默认为2M，每个bucket对应一个baseoffset，代表物理起始地址；每个bucket还有一个size标签，代表可以放入的block的大小，比如65K，代表可以放入64的block。如下图,图片来源于[范欣欣博客](http://hbasefly.com/2016/04/26/hbase-blockcache-2/)
+
+![bucket结构](image/bucket结构.png)
+
+### HFile
 
 HFile是hbase文件在hdfs上的存储格式。所有的操作都离不开它的格式，正如`程序=数据结构+算法`,HFile就是数据结构，好的数据结构能够省下复杂的操作。
 
@@ -247,8 +261,68 @@ shell 操作：
 - 恢复指定快照，恢复过程会替代原有数据，将表还原到快照点，快照点之后的所有更新将会丢失。需要注意的是原表需要先disable掉，才能执行restore_snapshot操作:`restore_snapshot ‘snapshotName'`
 - 根据快照恢复出一个新表，恢复过程不涉及数据移动，可以在秒级完成。`clone_snapshot 'snapshotName', ‘tableName'`
 
+
+
+## zk上存储的数据
+zk上存储的数据，通过`ls /habase`查看
+```
+[zk: localhost:2181(CONNECTED) 24] ls /hbase
+[meta-region-server, rs, splitWAL, backup-masters, table-lock, flush-table-proc, master-maintenance, online-snapshot, switch, master, running, draining, namespace, hbaseid, table]
+[zk: localhost:2181(CONNECTED) 25]
+```
+
+1. meta-region-server：meta表所在的rs的地址
+2. rs:rs的信息
+3. splitWAL：用于故障恢复时，切割WAL时使用
+4. backup-master：备份master节点，可以有多个
+5. table-lock:用来实现分布式锁
+6. flush-table-proc
+7. master-maintenance:
+8. online-snapshot:用来实现在线快照的功能，每个Region都执行快照。master下达命令，RegionServer返回结果都是通过该节点完成
+9. switch:
+10. master:master节点
+11. running:
+12. draining:
+13. namespace：所有的namespace
+14. habaseid：
+15. table:所有表的信息
+
+## hbase在hdfs上的存储布局
+hbase在hdfs上的存储布局
+```
+drwxr-xr-x   - hadoop supergroup          0 2019-11-04 20:54 /hbase/.hbase-snapshot
+drwxr-xr-x   - hadoop supergroup          0 2019-10-31 14:25 /hbase/.hbck
+drwxr-xr-x   - hadoop supergroup          0 2019-11-13 15:53 /hbase/.tmp
+drwxr-xr-x   - hadoop supergroup          0 2019-11-13 15:53 /hbase/MasterProcWALs
+drwxr-xr-x   - hadoop supergroup          0 2019-11-13 15:53 /hbase/WALs
+drwxr-xr-x   - hadoop supergroup          0 2019-11-04 11:31 /hbase/archive
+drwxr-xr-x   - hadoop supergroup          0 2019-10-31 14:25 /hbase/corrupt
+drwxr-xr-x   - hadoop supergroup          0 2019-11-01 15:32 /hbase/data
+-rw-r--r--   1 hadoop supergroup         42 2019-10-31 14:25 /hbase/hbase.id
+-rw-r--r--   1 hadoop supergroup          7 2019-10-31 14:25 /hbase/hbase.version
+drwxr-xr-x   - hadoop supergroup          0 2019-10-31 14:25 /hbase/mobdir
+drwxr-xr-x   - hadoop supergroup          0 2019-11-13 16:13 /hbase/oldWALs
+drwx--x--x   - hadoop supergroup          0 2019-10-31 14:25 /hbase/staging
+```
+
+1. .hbase-snapshot:执行snapshot后，相关的元数据文件存储在该目录
+2. .tmp:用于表的创建和删除操作，创建是先在此目录创建，成功后在转移到实际的目录
+3. .hbck
+4. MasterProcWALs:用于存储master procedure过程中的wal文件，wal文件可以用来在宕机等情况时进行回滚
+5. WALs：wal文件
+6. archive：文档归档目录
+  - 删除HFile时，将待删除的文件放入此目录
+  - 进行snapshot或者升级时使用
+  - Compaction时，将旧HFile移动到此目录
+7. corrupt：存储损坏的HLog或者HFile
+8. data：存储集群中所有Region的HFile数据，`/hbase/data/命名空间/表名/Region名称/列簇名/HFile文件名`；表描述文件等等。
+9. 集群创建时创建的唯一id
+10. hbase.version:版本
+11. oldWALs：WAL归档目录，确认数据从memstore中flush到磁盘后，将WAL文件移动到此
+
+
 ## 二级索引
-给定rowkey查询是很快的，但是正是由于这种设计，导致了HBase本身没有实现二级索引，但是可以自己实现：
+给定rowkey查询是很快的，但是正是由于这种设计，导致了HBase本身**没有实现二级索引**，但是可以自己实现：
 
 ### 全局索引
 新建一张表：二级索引=>rowkey
@@ -261,6 +335,9 @@ shell 操作：
 比如原表是{rowkey=id,name,class,age,g_id},现在将name设置为二级索引，那么多插入一行{rowkey=(id,name),class,age,g_id}，
 - 这种设计适合写多读少的情况
 - 查询的时候回扫描rowkey，效率不如全局索引，但是写的逻辑简单
+
+
+
 
 
 ## 参考
