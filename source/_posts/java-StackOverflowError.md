@@ -75,7 +75,7 @@ public class StackOverFlowDemo {
 }
 ~~~
 出现的错误：  
-![](/java-StackOverflowError/stackoverflow.png)
+![](java-StackOverflowError/stackoverflow.png)
 
 ### toString()
 
@@ -122,4 +122,4 @@ public class OOM {
 }
 ```
 
-![](/java-StackOverflowError/OOM.png)
+![](java-StackOverflowError/OOM.png)

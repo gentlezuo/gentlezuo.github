@@ -14,7 +14,7 @@ category: java
 借鉴了[你真的了解补码吗](https://www.jianshu.com/p/3004e5999be4)
 
 有符号数在计算机中存储，用数的最高位存放符号, 正数为0, 负数为1
-- 原码：原码就是符号位加上真值的绝对值，即用第一个二进制位表示符号（正数该位为0，负数该位为1），其余位表示值。
+- 原码：原码就是**符号位**加上真值的**绝对值**，即用第一个二进制位表示符号（正数该位为0，负数该位为1），其余位表示值。
 - 反码：正数的反码与其原码相同；负数的反码是对其原码逐位取反，但符号位除外。
 - 补码：正数的补码就是其本身；负数的补码是在其反码的基础上+1
 例如：
@@ -82,7 +82,6 @@ public final class Integer extends Number implements Comparable<Integer> {
 
     @Native public static final int   MAX_VALUE = 0x7fffffff;
 
- 
     public static final Class<Integer>  TYPE = (Class<Integer>) Class.getPrimitiveClass("int");
 
     private final int value;
@@ -156,8 +155,6 @@ private static String toUnsignedString0(int val, int shift) {
 
         return charPos;
     }
-
-
 ~~~
 
 将一个整数放入字符数值中
@@ -235,7 +232,7 @@ public static int highestOneBit(int i) {
     }
 ~~~
 
-缓存机制：默认缓存范围是-128～127，因此，两个数值在此区间的Ing=teger使用`==`判断返回的是`true`，二其他相等范围的Integer则返回false。例如：
+缓存机制：默认缓存范围是-128～127，因此，两个数值在此区间的Integer使用`==`判断返回的是`true`，而其他相等范围的Integer则返回false。例如：
 ~~~java
         Integer c=55;
         Integer d=55;

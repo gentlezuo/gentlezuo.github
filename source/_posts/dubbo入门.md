@@ -21,8 +21,7 @@ dubbo的流程：
 
 dubbo使用很简单，了解的dubbo的启动需要哪些条件（注册中心，服务调用方，消费方，接口），那么使用也就简单了，只需要服务提供方暴露服务给注册中心，服务消费方远程调用服务即可。
 
-不要忘记引入先关的依赖，我这里使用的是：  
-
+不要忘记引入依赖，我这里使用的是：  
 ```xml
 <dependency>
             <groupId>com.alibaba</groupId>
@@ -120,8 +119,6 @@ public class Consumer1 {
         registry.setPassword("bbb");
 
         // 注意：ReferenceConfig为重对象，内部封装了与注册中心的连接，以及与服务提供方的连接
-
-
         //引用远程服务
         ReferenceConfig<Hello> referenceConfig =new ReferenceConfig<Hello>();
         referenceConfig.setApplication(application);

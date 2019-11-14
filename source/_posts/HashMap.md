@@ -47,7 +47,7 @@ HashMap是一个很常用很重要的工具类，看看它是怎么实现的
 允许键值null
 ### 基本成员属性
 ~~~java
-//实现了可序列化和克隆
+//可序列化和克隆
 public class HashMap<K,V> extends AbstractMap<K,V>
     implements Map<K,V>, Cloneable, Serializable {
      //默认初始化数组长度为16
@@ -60,9 +60,9 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      static final int TREEIFY_THRESHOLD = 8;
      //小于等于这个数会将红黑树转化为链表
      static final int UNTREEIFY_THRESHOLD = 6;
-     //可以树化的最短的数组长度，否则就扩表
+     //可以树化的最短的数组长度，否则就扩数组
      static final int MIN_TREEIFY_CAPACITY = 64;
-    //一个Node数组，在使用的时候才初始化，并且长度总是2^m，方便计算角标(len-1)&hash
+    //一个Node数组，在使用的时候才初始化，并且长度总是2^m，方便计算下标(len-1)&hash
     transient Node<K,V>[] table;
 
     transient Set<Map.Entry<K,V>> entrySet;
@@ -70,7 +70,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     transient int size;
     //更改次数，在迭代时判断map是否被更改
     transient int modCount;
-    //下一个数组长度
+    //阈值
     int threshold;
     final float loadFactor;
 
@@ -96,7 +96,6 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 ### HashMap具体的方法
 
-
 key的hash值:高16位与低16为进行亦或运算
 
 ~~~java
@@ -104,7 +103,6 @@ static final int hash(Object key) {
         int h;
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
-
 ~~~
 
 求不小于一个数的最小的2^n，例如num=15，返回16；num=16，返回16。
