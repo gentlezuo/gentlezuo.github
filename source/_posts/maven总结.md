@@ -10,8 +10,8 @@ category: 工具
 ## 简介
 
 maven是一个Apache下由java开发的开源项目。基于对象模型的概念(POM)，Maven利用能管理一个项目的构建、报告和文档等步骤。
-
 <!--more-->
+
 
 ## 需求
 当写一个项目的时候往往需要引入第三方依赖包，但是一个第三方包可能又要依赖其他的包，一旦依赖过多，就会给开发人员造成很大的负担，而且容易出错。maven使用一个仓库存储需要的第三方库，而且可以自动解决依赖问题。构建过程枯燥重复，使用maven可以减轻构建的烦恼。
@@ -19,7 +19,7 @@ maven是一个Apache下由java开发的开源项目。基于对象模型的概�
 
 ## 安装
 去[官网](http://maven.apache.org/download.cgi)下载相应系统的文件，解压放入一个目录，设置环境变量。      
-![](/maven总结/maven下载.png)
+![](maven总结/maven下载.png)
 
 也可以使用IDEA中自带的maven，一般使用自己安装的maven，可以在`File | Settings | Build, Execution, Deployment | Build Tools | Maven`中修改配置。   
 
@@ -239,8 +239,6 @@ B的pom.xml文件
         </dependency>
 
   </dependencies>
-
-  
 ~~~
 
 C的pom.xml文件
@@ -282,7 +280,7 @@ D依赖B，C，引入B，C
         </dependency>
 
     </dependencies>
-~~~~
+~~~
 通过`mvn dependency:list `查看依赖，可以看见是依赖的B中的sl4j的版本，当交换两个依赖的顺序，再次查看会发现依赖的sl4j版本改变了。
 
 #### Error

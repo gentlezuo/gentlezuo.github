@@ -1,9 +1,7 @@
 ---
 title: dubbo入门
 date: 2019-05-26 23:45:10
-tags: 
-- dubbo
-- 分布式
+tags: dubbo
 category: dubbo
 ---
 
@@ -12,7 +10,7 @@ category: dubbo
 dubbo是一个高性能的rpc框架。它提供了三大核心能力：**面向接口**的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。
 <!--more-->
 
-![结构图](/dubbo入门/dubbo.png)
+![结构图](dubbo入门/dubbo.png)
 
 dubbo的流程：  
 初始化阶段：服务提供方注册服务(注册也就是将自己的信息写入注册中心，让别人能够找到自己，从而调用自己)，服务消费方订阅服务   

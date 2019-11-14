@@ -10,6 +10,17 @@ category: java
 
 在以前传统的java IO是阻塞的，面向字节的。而NIO是非阻塞的，面向缓冲区的。
 <!--more-->
+- [Buffer](#buffer)
+  - [Buffer的属性](#buffer%e7%9a%84%e5%b1%9e%e6%80%a7)
+  - [Buffer的主要方法](#buffer%e7%9a%84%e4%b8%bb%e8%a6%81%e6%96%b9%e6%b3%95)
+  - [直接缓存和非直接缓存区](#%e7%9b%b4%e6%8e%a5%e7%bc%93%e5%ad%98%e5%92%8c%e9%9d%9e%e7%9b%b4%e6%8e%a5%e7%bc%93%e5%ad%98%e5%8c%ba)
+- [Channel](#channel)
+  - [使用](#%e4%bd%bf%e7%94%a8)
+    - [文件Channel](#%e6%96%87%e4%bb%b6channel)
+    - [网络Channel](#%e7%bd%91%e7%bb%9cchannel)
+  - [Selector](#selector)
+
+
 在NIO中有三个组件：Buffer，Channel，Selector。
 
 ## Buffer
@@ -189,7 +200,7 @@ public static void copy4() throws IOException {
 
 选择器实现了复用，很多通道都注册在这个选择器上，当选择器发现通道有了请求就可以对每一个通道进行处理，服务端可以对每一个请求建立一个线程，比BIO要高效。
 
-![Selector](/java-NIO笔记/selector.jpg)
+![Selector](java-NIO笔记/selector.jpg)
 
 ~~~java
 //创建选择器
@@ -201,7 +212,6 @@ Selector selector = Selector.open();
 - OP_WRITE = 1 << 2;
 - OP_CONNECT = 1 << 3;
 - OP_ACCEPT = 1 << 4;
-
 
 
 事件集合：
