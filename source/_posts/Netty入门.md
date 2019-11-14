@@ -469,7 +469,7 @@ public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception 
 - netty还为我们提供了一些开箱即用的编码解码器
 - 以上使用了jdk的序列化方式，但是还有其他更优秀的序列化框架，例如JBoss的marshalling，还有google的ProtoBuf
 
-![解码器](/Netty入门/codec.png)
+![解码器](Netty入门/codec.png)
 
 
 ## 其他

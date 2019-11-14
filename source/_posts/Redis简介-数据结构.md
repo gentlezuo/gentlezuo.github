@@ -31,7 +31,7 @@ struct sdshdr{
 };
 ~~~
 比如Redes这个字符串的存储结构：  
-![SDS](/Redis简介-数据结构/SDS.jpeg)
+![SDS](Redis简介-数据结构/SDS.jpeg)
 
 #### 优点
 - 常数时间获取长度
@@ -90,7 +90,7 @@ typedef struct dictht{
 ~~~
 
 如图描绘了一个数组长度为4的空字典    
-![空哈希表](/Redis简介-数据结构/dictht.jpeg)
+![空哈希表](Redis简介-数据结构/dictht.jpeg)
 
 
 table是一个数组，数组中每一个元素都是一个指向了一个dictEntry的指针  

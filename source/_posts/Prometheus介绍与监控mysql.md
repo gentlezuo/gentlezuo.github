@@ -24,7 +24,7 @@ git地址: [https://github.com/prometheus](https://github.com/prometheus)
 
 架构图：
 
-![prometheus架构](/Prometheus介绍与监控mysql/prometheus-architecture.png)
+![prometheus架构](Prometheus介绍与监控mysql/prometheus-architecture.png)
 
 ### 特点
 - 多维数据模型
@@ -122,7 +122,7 @@ scrape_configs:
 
 启动prometheus.exe，此时在浏览器中输入`localhost:9090`，点击Status->Target
 
-![mysql down](/Prometheus介绍与监控mysql/mysql-down.png)
+![mysql down](Prometheus介绍与监控mysql/mysql-down.png)
 
 抓取自己的数据成功，由于mysql还没有暴露抓取的指标，因此还处于down。
 
@@ -167,10 +167,10 @@ http_port = 10000
 ### 配置数据源
 登录后在侧边栏点击Configuration，选择dataSource，Grafana支持多种数据源
 
-![grafana支持的数据源](/Prometheus介绍与监控mysql/grafana-datasource.png)
+![grafana支持的数据源](Prometheus介绍与监控mysql/grafana-datasource.png)
 这里选择prometheus
 
-![配置prometheus数据源](/Prometheus介绍与监控mysql/grafana-prometheus.png)
+![配置prometheus数据源](Prometheus介绍与监控mysql/grafana-prometheus.png)
 
 填入对应数据，保存。
 
@@ -182,7 +182,7 @@ http_port = 10000
 
 成功界面：
 
-![图片描述](/Prometheus介绍与监控mysql/grafana-dashboard-detail.png)
+![图片描述](Prometheus介绍与监控mysql/grafana-dashboard-detail.png)
 
 ### 其它监控
 

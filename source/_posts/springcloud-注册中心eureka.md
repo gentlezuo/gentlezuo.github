@@ -69,7 +69,7 @@ public class EurekaServerApplication {
 
 此时启动工程，在浏览器中输入[http://localhost:8761/](http://localhost:8761/),你将会看到以下界面，表示启动eureka服务启动成功了。
 
-![eureka启动成功](/springcloud-注册中心eureka/eureka注册.png)
+![eureka启动成功](springcloud-注册中心eureka/eureka注册.png)
 
 ## 服务注册
 
@@ -130,7 +130,7 @@ public class ServiceApplication {
 
 启动项目，然后刷新[http://localhost:8761/](http://localhost:8761/),你会发现有一个服务已经注册成功了。
 
-![eureka注册成功](/springcloud-注册中心eureka/eureka-client.jpg)
+![eureka注册成功](springcloud-注册中心eureka/eureka-client.jpg)
 
 
 ## 流程简述

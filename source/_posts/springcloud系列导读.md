@@ -43,8 +43,7 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 
 当然如果注册中心挂掉，那么整个系统就直接崩溃了，因此需要选择高可用的注册中心，比如**consul**，**nacos**,**zookeeper**，**eureka**，等，而且注册中心也必须是一个集群。
 
-
-![注册中心](/springcloud系列导读/注册中心.png)
+![注册中心](springcloud系列导读/注册中心.png)
 
 
 ### 配置中心
@@ -65,7 +64,7 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 
 spring cloud 提供了一个组件：**spring cloud config**可以达到实现这个需求，Alibaba也提供了一个很优秀的组件：**nacos**。
 
-![配置中心](/springcloud系列导读/配置中心.png)
+![配置中心](springcloud系列导读/配置中心.png)
 
 ### robbin
 

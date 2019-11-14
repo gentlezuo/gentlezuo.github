@@ -57,7 +57,7 @@ HBase是一个分布式，可扩展，多版本，大数据存储的非关系型
 当然，这些都可以被其他中间件解决，比如phoenix
 ## 架构
 
-![架构](/HBase简介/hbase架构.jpg)
+![架构](HBase简介/hbase架构.jpg)
 
 hbase是一个分布式的系统，基于master/slaver架构，并且依赖zookeeper。屏蔽底层依赖的HDFS，也就剩下三个组件：HMaster，RegionServer，zookeeper。它们的作用分别如下：
 
@@ -151,7 +151,7 @@ ROW                           COLUMN+CELL
 6. HFile：数据格式
 
 如下图所示：   
-![](/HBase简介/hbase架构.jpg)
+![](HBase简介/hbase架构.jpg)
 
 
 ## 使用

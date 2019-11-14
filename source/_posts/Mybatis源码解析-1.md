@@ -180,10 +180,10 @@ Configuration中的数据:可以从中找到所有的配置文件的信息，如
 ```
 
 environment中就是配置的环境的信息  
-![](/Mybatis源码解析-1/enviroment.png)   
+![](Mybatis源码解析-1/enviroment.png)   
 
 mapperRegistry中存放者已经注册的Mapper：其中有这个对应的接口的信息   
-![](/Mybatis源码解析-1/mapperRegistry.png)   
+![](Mybatis源码解析-1/mapperRegistry.png)   
 
 mappedStatements是一个mapper标签中每一条标签的键值对，键是对应的方法（包含段名和全名，当短名冲突的时候会以一个Ambiguity对象填充），值是关于这一条mapper的封装，包括Configuration，sqlSource（源sql语句）还有resultMap，ParamMap等。
 
@@ -244,5 +244,5 @@ public Executor newExecutor(Transaction transaction, ExecutorType executorType) 
   }
 ```
 sqlSession中的成员：   
-![sqlSession](/Mybatis源码解析-1/sqlSession.png)    
+![sqlSession](Mybatis源码解析-1/sqlSession.png)    
 

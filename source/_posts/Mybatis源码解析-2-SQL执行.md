@@ -22,7 +22,6 @@ public void querytOne() throws IOException {
         sqlSession.close();
     }
 }
-
 ```
 
 
@@ -105,7 +104,7 @@ protected T newInstance(MapperProxy<T> mapperProxy) {
   }
 ```
 此时已经拿到了一个Mapper，Mapper中包含：  
-![](/Mybaits源码解析-2-SQL执行/Mapper1.png) 
+![](Mybaits源码解析-2-SQL执行/Mapper1.png) 
 
 在2处，接下来执行调用的方法，由于代理，与是调用`invoke`方法   
 ```java
@@ -227,7 +226,7 @@ public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds r
 ```
 
 此时可以看见Mapper对象更新了   
-![](/Mybaits源码解析-2-SQL执行/Mapper对象.png)
+![](Mybaits源码解析-2-SQL执行/Mapper对象.png)
 
 
 最后sqlSession.close();会处理是否提交，是否回滚，是否将一级缓存的值放入二级缓存中等等。

@@ -87,7 +87,7 @@ public class ServiceApplication {
 
 还可以访问其它的信息，比如服务的健康信息，key/value,nodes等
 
-![consul节点健康检查](/springcloud-注册中心consul/consul-服务健康检测.jpg)
+![consul节点健康检查](springcloud-注册中心consul/consul-服务健康检测.jpg)
 
 当然consul还有更多的功能可以配置
 

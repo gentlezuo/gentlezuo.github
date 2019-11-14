@@ -356,4 +356,3 @@ ThreadLocalMap不是必需品，定义在Thread中增加了成本，定义在Thr
 每一个Thread实例，都持有一个ThreadLocalMap实例（可能为空），当我们使用ThreadLocal保存一些数据时，实际上是向这个Map中写入数据。key是该ThreadLocal，值就是该ThreadLocal想要保存的值。
 
 
-

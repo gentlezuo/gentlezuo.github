@@ -34,7 +34,7 @@ Channel本身并没有提供很多的方法去处理事件，只有：
 
 ChannelOutboundHandler用来处理出inbound事件，它提供了以下方法：
 
-![ChannelOutboundHandler的方法](/netty事件传播机制/outbound方法.png)
+![ChannelOutboundHandler的方法](netty事件传播机制/outbound方法.png)
 
 包括bind、connect、disconnect、close、deregister、read、write、flush等方法    
 通常我们复写这些方法来处理自己事件的逻辑。
@@ -45,7 +45,7 @@ outbound的时候可能会触发这些事件，如果我们没有复写这些方
 
 ChannelInboundHandler用来处理出outbound事件，它提供了以下方法：
 
-![ChannelInboundHandler的方法](/netty事件传播机制/inbound方法.png)
+![ChannelInboundHandler的方法](netty事件传播机制/inbound方法.png)
 
 提供了包括：通道激活，取消激活，可读，读完毕，通道注册到事件循环中，从事件循环中注销的事件，异常处理事件，用户的事件被触发的事件等。
 
@@ -106,7 +106,7 @@ ChannelPipeline实现了拦截过滤器模式的高级形式，让用户完全�
 </pre>
 
 
-![入站出站](/netty事件传播机制/入站出站.png)   
+![入站出站](netty事件传播机制/入站出站.png)   
 
 入站事件一般由I/O线程触发，出站事件一般由用户触发。
 
