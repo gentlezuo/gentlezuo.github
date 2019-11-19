@@ -11,16 +11,15 @@ spring cloud是微服务的集大成者，它集成了许多优秀的工具，�
 它基于spring boot，因此配置简单，容易学习。
 <!--more-->
 
-1. **[zookeeper入门](https://gentlezuo.github.io/2019/05/19/zookeeper%E5%85%A5%E9%97%A8/)**
-2. **[springcloud-erueka注册中心](https://gentlezuo.github.io/2019/06/29/springcloud-注册中心eureka/)**
-3. **[springcloud-consul注册中心](https://gentlezuo.github.io/2019/06/30/springcloud-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83consul/)**
-4. **[springcloud-服务调用-robbin负载均衡](https://gentlezuo.github.io/2019/06/30/springcloud-feign服务调用_robbin负载均衡)**
-5. **[springcloud-config配置中心](https://gentlezuo.github.io/2019/06/30/springcloud-config配置中心)**
-6. **[springcloud-nacos注册中心](https://gentlezuo.github.io/2019/07/01/springcloud-注册中心nacos)**
-7. **[springcloud-nacos配置中心](https://gentlezuo.github.io/2019/07/01/springcloud-配置中心nacos)**
-8. **[springcloud-链路追踪sleuth](https://gentlezuo.github.io/2019/07/05/springloud-%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AAsleuth/#%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)**
-9. **[springcloud-链路追踪skwalking](https://gentlezuo.github.io/2019/07/05/springcloud-%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AAskywalking/#more)**
-10. **[APM工具对比](https://gentlezuo.github.io/2019/07/13/APM%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/#%E8%B0%83%E7%A0%94)**
+1. **[springcloud-erueka注册中心](https://gentlezuo.github.io/2019/06/29/springcloud-注册中心eureka/)**
+2. **[springcloud-consul注册中心](https://gentlezuo.github.io/2019/06/30/springcloud-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83consul/)**
+3. **[springcloud-服务调用-robbin负载均衡](https://gentlezuo.github.io/2019/06/30/springcloud-feign服务调用_robbin负载均衡)**
+4. **[springcloud-config配置中心](https://gentlezuo.github.io/2019/06/30/springcloud-config配置中心)**
+5. **[springcloud-nacos注册中心](https://gentlezuo.github.io/2019/07/01/springcloud-注册中心nacos)**
+6. **[springcloud-nacos配置中心](https://gentlezuo.github.io/2019/07/01/springcloud-配置中心nacos)**
+7. **[springcloud-链路追踪sleuth](https://gentlezuo.github.io/2019/07/05/springloud-%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AAsleuth/#%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)**
+8. **[springcloud-链路追踪skwalking](https://gentlezuo.github.io/2019/07/05/springcloud-%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AAskywalking/#more)**
+9.  **[APM工具对比](https://gentlezuo.github.io/2019/07/13/APM%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/#%E8%B0%83%E7%A0%94)**
 
 
 
