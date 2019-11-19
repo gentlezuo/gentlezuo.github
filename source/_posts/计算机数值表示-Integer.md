@@ -66,7 +66,6 @@ Z = X的补码 + (-Y的补码)
 ~~~
 
 ## Integer
-佩服Lee Boynton，Arthur van Hoff，Josh Bloch，Joseph D. Darcy   
 
 计算机中二进制运算比普通的加减乘除快很多，因此代码中很多使用了位运算，难以阅读，挑选了几个具有代表性的函数分析   
 
@@ -91,7 +90,6 @@ public final class Integer extends Number implements Comparable<Integer> {
 
 转换进制
 ~~~java
-
 public static String toString(int i, int radix) {
         if (radix < Character.MIN_RADIX || radix > Character.MAX_RADIX)
             radix = 10;
@@ -254,7 +252,7 @@ private static class IntegerCache {
         static {
             
             int h = 127;
-            //用于指定缓冲区的大小
+            //用于指定缓冲区的大小，可以在jvm启动时修改该参数
             String integerCacheHighPropValue =
                 sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
             if (integerCacheHighPropValue != null) {
