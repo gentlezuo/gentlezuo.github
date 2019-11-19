@@ -26,7 +26,7 @@ KV存储：应用程序可以将Consul的分层键/值存储用于任何目的�
 
 以上是从官网翻译的结果。
 
-它提供的这些功能可以很方便的搭建一个注册中心。
+它提供的这些功能可以很方便地搭建一个注册中心。
 
 ### 下载安装
 
@@ -166,14 +166,14 @@ ip：172.20.20.20 ，172.20.20.21 ，172.20.20.22
 
 ## vs others
 
-| feature | consul | zk | nacos | 
-| --- | ---- | ---- | ---- |  
-| 多数据中心 | 支持 | 支持  | 支持 |
-| kv存储 | 支持 | 支持 | 支持 | 
-|一致性 | raft | paxos | raft | 
-|cap | cp | cp | cp |
-|安全 | https/acl | acl(3.5.5支持https)| https |
-| metrics | ok | no | ok |
+| feature    | consul    | zk                  | nacos |
+| ---------- | --------- | ------------------- | ----- |
+| 多数据中心 | 支持        | 支持                 | 支持  |
+| kv存储     | 支持       | 支持                 | 支持  |
+| 一致性     | raft       | paxos               | raft  |
+| cap        | cp        | cp                  | cp    |
+| 安全       | https/acl  | acl(3.5.5支持https) | https |
+| metrics    | ok        | no                  | ok    |
 另外nacos还可作为配置中心。
 
 ## 参考
