@@ -2,7 +2,6 @@
 title: gc-标记整理算法的两种实现
 date: 2019-08-10 23:33:25
 tags: 
-- java
 - gc
 - 算法
 category: 算法

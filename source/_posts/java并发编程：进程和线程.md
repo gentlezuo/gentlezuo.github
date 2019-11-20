@@ -3,7 +3,6 @@ title: java并发编程：进程和线程
 date: 2019-06-9 21:15:33
 tags: 
 - 进程与线程
-- java
 category: java并发编程
 ---
 

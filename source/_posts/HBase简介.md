@@ -4,8 +4,8 @@ date: 2019-11-09 01:19:39
 tags: 
 - HBase
 - nosql
-- 数据库
-category: 大数据
+- 大数据
+category: 数据库
 ---
 
 HBase是一个分布式，可扩展，多版本，大数据存储的非关系型数据库。
