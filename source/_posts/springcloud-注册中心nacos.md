@@ -3,7 +3,7 @@ title: springcloud-注册中心nacos
 date: 2019-07-1 21:52:01
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 为什么要使用nacos？

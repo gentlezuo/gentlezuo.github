@@ -2,7 +2,7 @@
 title: netty事件传播机制
 date: 2019-05-18 17:09:50
 tags: netty
-category: netty
+category: 框架
 ---
 
 

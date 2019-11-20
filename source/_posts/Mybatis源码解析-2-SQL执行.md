@@ -2,7 +2,7 @@
 title: Mybatis源码解析-2-SQL执行
 date: 2019-05-11 12:33:59
 tags: mybatis
-category: mybatis
+category: 框架
 ---
 
 # SQL执行过程

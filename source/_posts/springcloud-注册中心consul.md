@@ -3,7 +3,7 @@ title: springcloud-注册中心consul
 date: 2019-06-30 09:52:01
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 

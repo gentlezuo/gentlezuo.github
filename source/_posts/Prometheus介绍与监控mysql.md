@@ -3,6 +3,7 @@ title: Prometheus介绍与MySQL监控
 date: 2019-07-12 22:26:17
 tags: 
 - 监控
+- prometheus
 category: 工具
 ---
 

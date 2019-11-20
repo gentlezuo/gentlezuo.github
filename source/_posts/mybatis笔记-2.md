@@ -2,7 +2,7 @@
 title: mybatis笔记-2
 date: 2019-05-04 17:05:57
 tags: mybatis
-category: mybatis
+category: 框架
 ---
 
 # mybatis使用初探2

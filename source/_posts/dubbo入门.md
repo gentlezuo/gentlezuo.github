@@ -2,7 +2,7 @@
 title: dubbo入门
 date: 2019-05-26 23:45:10
 tags: dubbo
-category: dubbo
+category: 框架
 ---
 
 

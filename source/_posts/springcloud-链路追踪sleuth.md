@@ -3,7 +3,7 @@ title: springcloud-链路追踪sleuth
 date: 2019-07-5 23:32:06
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 在分布式系统中，链路将总是十分重要。

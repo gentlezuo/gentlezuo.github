@@ -4,7 +4,7 @@ date: 2019-08-25 18:41:19
 tags:
 - java
 - 工具
-category: java
+category: 工具
 ---
 
 jdk自带一些工具来查看或更改java程序的信息。在程序出现问题时可以用它们分析。

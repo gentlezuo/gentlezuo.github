@@ -3,7 +3,7 @@ title: ThreadLocal源码分析
 date: 2019-06-04 13:15:19
 tags: 
 - JDK源码
-category: JDK源码
+category: java
 ---
 
 ThreadLocal类可以使每个线程保存一份线程局部变量，也就是当前线程持有一个变量，各个线程之间的这个变量不受影响。一个线程可以有多个ThreadLocal实例。

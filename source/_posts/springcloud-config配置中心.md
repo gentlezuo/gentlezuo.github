@@ -3,7 +3,7 @@ title: springcloud-config配置中心
 date: 2019-06-30 21:42:20
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 ## 背景

@@ -1,35 +1,35 @@
 ---
 title: MySQL：索引合并
 date: 2019-09-11 15:00:50
-tags: 数据库
-category: MySQL
+tags: MySQL
+category: 数据库
 ---
 
 当单表中使用到了多个索引，优化器就可能使用索引合并(index merge)。mysql官网上只说了是什么，并没有讲为什么。简单分析一下...
 <!--more-->
 
-- [索引合并](#%E7%B4%A2%E5%BC%95%E5%90%88%E5%B9%B6)
-  - [不足](#%E4%B8%8D%E8%B6%B3)
-  - [简介](#%E7%AE%80%E4%BB%8B)
-  - [算法](#%E7%AE%97%E6%B3%95)
-    - [index merge intersection access algorithm（索引合并交集访问算法）](#index-merge-intersection-access-algorithm%E7%B4%A2%E5%BC%95%E5%90%88%E5%B9%B6%E4%BA%A4%E9%9B%86%E8%AE%BF%E9%97%AE%E7%AE%97%E6%B3%95)
-      - [执行流程](#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B)
-      - [必要条件](#%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6)
-    - [index merge union access algorithm（索引合并并集访问算法）](#index-merge-union-access-algorithm%E7%B4%A2%E5%BC%95%E5%90%88%E5%B9%B6%E5%B9%B6%E9%9B%86%E8%AE%BF%E9%97%AE%E7%AE%97%E6%B3%95)
-      - [必要条件](#%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6-1)
-      - [执行流程](#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B-1)
-      - [例子](#%E4%BE%8B%E5%AD%90)
-    - [index merge sort sort-union access algorithm （索引合并排序并集访问算法）](#index-merge-sort-sort-union-access-algorithm-%E7%B4%A2%E5%BC%95%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%B9%B6%E9%9B%86%E8%AE%BF%E9%97%AE%E7%AE%97%E6%B3%95)
-      - [必要条件](#%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6-2)
-      - [执行流程](#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B-2)
-      - [例子](#%E4%BE%8B%E5%AD%90-1)
-  - [实战](#%E5%AE%9E%E6%88%98)
-    - [复现 intersect](#%E5%A4%8D%E7%8E%B0-intersect)
-    - [复现 union](#%E5%A4%8D%E7%8E%B0-union)
-    - [复现 sort-union](#%E5%A4%8D%E7%8E%B0-sort-union)
-    - [复现因为组合索引没有完全覆盖而导致没有使用intersect](#%E5%A4%8D%E7%8E%B0%E5%9B%A0%E4%B8%BA%E7%BB%84%E5%90%88%E7%B4%A2%E5%BC%95%E6%B2%A1%E6%9C%89%E5%AE%8C%E5%85%A8%E8%A6%86%E7%9B%96%E8%80%8C%E5%AF%BC%E8%87%B4%E6%B2%A1%E6%9C%89%E4%BD%BF%E7%94%A8intersect)
-    - [复现因为二级索引不是等值查询而导致没有使用intersect](#%E5%A4%8D%E7%8E%B0%E5%9B%A0%E4%B8%BA%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%95%E4%B8%8D%E6%98%AF%E7%AD%89%E5%80%BC%E6%9F%A5%E8%AF%A2%E8%80%8C%E5%AF%BC%E8%87%B4%E6%B2%A1%E6%9C%89%E4%BD%BF%E7%94%A8intersect)
-  - [参考](#%E5%8F%82%E8%80%83)
+- [索引合并](#%e7%b4%a2%e5%bc%95%e5%90%88%e5%b9%b6)
+  - [不足](#%e4%b8%8d%e8%b6%b3)
+  - [简介](#%e7%ae%80%e4%bb%8b)
+  - [算法](#%e7%ae%97%e6%b3%95)
+    - [index merge intersection access algorithm（索引合并交集访问算法）](#index-merge-intersection-access-algorithm%e7%b4%a2%e5%bc%95%e5%90%88%e5%b9%b6%e4%ba%a4%e9%9b%86%e8%ae%bf%e9%97%ae%e7%ae%97%e6%b3%95)
+      - [执行流程](#%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b)
+      - [必要条件](#%e5%bf%85%e8%a6%81%e6%9d%a1%e4%bb%b6)
+    - [index merge union access algorithm（索引合并并集访问算法）](#index-merge-union-access-algorithm%e7%b4%a2%e5%bc%95%e5%90%88%e5%b9%b6%e5%b9%b6%e9%9b%86%e8%ae%bf%e9%97%ae%e7%ae%97%e6%b3%95)
+      - [必要条件](#%e5%bf%85%e8%a6%81%e6%9d%a1%e4%bb%b6-1)
+      - [执行流程](#%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b-1)
+      - [例子](#%e4%be%8b%e5%ad%90)
+    - [index merge sort sort-union access algorithm （索引合并排序并集访问算法）](#index-merge-sort-sort-union-access-algorithm-%e7%b4%a2%e5%bc%95%e5%90%88%e5%b9%b6%e6%8e%92%e5%ba%8f%e5%b9%b6%e9%9b%86%e8%ae%bf%e9%97%ae%e7%ae%97%e6%b3%95)
+      - [必要条件](#%e5%bf%85%e8%a6%81%e6%9d%a1%e4%bb%b6-2)
+      - [执行流程](#%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b-2)
+      - [例子](#%e4%be%8b%e5%ad%90-1)
+  - [实战](#%e5%ae%9e%e6%88%98)
+    - [复现 intersect](#%e5%a4%8d%e7%8e%b0-intersect)
+    - [复现 union](#%e5%a4%8d%e7%8e%b0-union)
+    - [复现 sort-union](#%e5%a4%8d%e7%8e%b0-sort-union)
+    - [复现因为组合索引没有完全覆盖而导致没有使用intersect](#%e5%a4%8d%e7%8e%b0%e5%9b%a0%e4%b8%ba%e7%bb%84%e5%90%88%e7%b4%a2%e5%bc%95%e6%b2%a1%e6%9c%89%e5%ae%8c%e5%85%a8%e8%a6%86%e7%9b%96%e8%80%8c%e5%af%bc%e8%87%b4%e6%b2%a1%e6%9c%89%e4%bd%bf%e7%94%a8intersect)
+    - [复现因为二级索引不是等值查询而导致没有使用intersect](#%e5%a4%8d%e7%8e%b0%e5%9b%a0%e4%b8%ba%e4%ba%8c%e7%ba%a7%e7%b4%a2%e5%bc%95%e4%b8%8d%e6%98%af%e7%ad%89%e5%80%bc%e6%9f%a5%e8%af%a2%e8%80%8c%e5%af%bc%e8%87%b4%e6%b2%a1%e6%9c%89%e4%bd%bf%e7%94%a8intersect)
+  - [参考](#%e5%8f%82%e8%80%83)
 
 # 索引合并
 当单表使用了多个索引，每个索引都可能返回一个结果集，mysql会将其求交集或者并集，或者是交集和并集的组合。也就是说一次查询中可以使用多个索引。

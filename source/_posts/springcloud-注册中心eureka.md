@@ -3,7 +3,7 @@ title: springcloud-注册中心eureka
 date: 2019-06-29 21:20:00
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 在springcloud中eureka被用来作为一个注册中心组件。

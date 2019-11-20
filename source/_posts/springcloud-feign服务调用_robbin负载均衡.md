@@ -3,7 +3,7 @@ title: springcloud-服务调用-robbin负载均衡
 date: 2019-06-30 13:57:56
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 ## 背景

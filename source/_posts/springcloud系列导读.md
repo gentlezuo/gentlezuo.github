@@ -3,7 +3,7 @@ title: springcloud系列导读
 date: 2019-06-29 19:21:15
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 spring cloud是微服务的集大成者，它集成了许多优秀的工具，因此使用spring cloud 全家桶就可以很容易的开发微服务项目。

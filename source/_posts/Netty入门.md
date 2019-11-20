@@ -2,7 +2,7 @@
 title: Netty入门
 date: 2019-05-17 17:52:40
 tags: netty
-category: netty
+category: 框架
 ---
 
 # netty

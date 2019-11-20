@@ -3,7 +3,7 @@ title: springcloud-配置中心nacos
 date: 2019-07-1 22:55:01
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 nacos的配置功能比springcloud原生的要强大，更简洁。

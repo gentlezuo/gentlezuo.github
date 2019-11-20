@@ -3,7 +3,7 @@ title: springcloud-链路追踪skwalking
 date: 2019-07-5 23:55:01
 tags: 
 - springcloud
-category: springcloud
+category: 微服务
 ---
 
 在一个微服务中，链路追踪能够准确监控所有调用链路，从而定位慢调用，失败调用。

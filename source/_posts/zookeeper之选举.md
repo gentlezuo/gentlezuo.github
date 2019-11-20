@@ -4,7 +4,7 @@ date: 2019-05-20 21:08:27
 tags: 
 - zookeeper
 - 分布式
-category: zookeeper
+category: 微服务
 ---
 
 zookeeper选举机制
